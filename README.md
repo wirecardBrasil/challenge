@@ -1,9 +1,16 @@
-# Moip's Technical Challenge
+# Moip Technical Challenge
 
-## First step: The API
+## Level 1: The API
 
-Given a necessity, we need to create a new API to process payments from our clients. The API needs to accept two payment methods: Credit Card and Boleto. We need to create an endpoint to create the payment and another one to check the status of that payment. The following list describes the details of the fields:
+Given a necessity, we need to create a new API to process payments from our clients. 
+That been said, we need:
 
+#### 1. An endpoint to create a payment
+- The API needs to accept two payment methods: Credit Card and Boleto. 
+- When the payment method is boleto, we only need to return the boleto's number in our response.
+- When the method is card, we need to return if it was successful or not *(please don't worry about processing the payment, just mock the answers)*.
+- The API must receive the information of the buyer, of our client and of the payment. The information needed is the following:
+```
 Client:
  - ID
 
@@ -15,37 +22,36 @@ Buyer:
 Payment:
  - Amount
  - Type
- > When the payment is Credit Card
- - Card
-   - Holder's Name
-   - Card number
-   - Card's expiration date
-   - CVV (Number behind the card)
+ - Card (when the payment type is credit card)
+ 
+Card:
+ - Card holder name
+ - Card number
+ - Card expiration date
+ - Card CVV (Number behind the card)
 
-For the boleto method, there are no additional information required.
+```
 
-When the payment method is boleto, we only need to return the boleto's number in our response.
-When the method is card, we need to return if it was successful or not.
+#### 2. An endpoint to check the payment status
+- The API needs to return all the information about the payment, as well as the status of that payment.
 
-* You don't need to worry about the acquire (Payment processors, such as Cielo, Rede, etc.), just mock the answers.
 
-In the endpoint to check the payment status, we need to return all the information about the payment, as well as the status of that payment.
-
-We want unit tests! :D
-
-## Second step: The Checkout
+## Level 2: The Checkout
 
 For those clients that won't integrate with our API, we need to create a simple checkout (or a simple order completion page).
+In this checkout, we need:
+- To insert the buyer information and choose the payment method.
+- To validate if the card is valid and who is the card issuer.
+- To simulate a form of identification of the client that will be sent to the API.
+- To show on the screen if the transaction was successful or not.
+- To persist and consume the data effectively for this test.
 
-In this checkout, we need to have the option to insert the buyer's information and choose the payment method with the additional data.
-We need to validate if the card is valid and what is the issuer. You need to simulate a form of identification of the client to be sent correctly to the API.
 
-The answer should be shown on the screen for the client to know if the transaction was successful or not.
+# Additional informations
+This challenge can be done in any language and any database.
 
-Lastly, it is necessary to persist and consume the data effectively for this test.
+Please take a time to write a READ-ME file explaining how to run your project, the architecture and the design adopted to solve the challenges.
 
-It can be done in any language, and any type of database.
+Good luck!
 
-Try to explain the architecture and the design adopted to solve the problems.
-
-Plus - Build a docker container with the stack.
+*PS: Using docker is a plus and we want unit tests! :D*

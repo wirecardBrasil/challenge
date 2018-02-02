@@ -5,7 +5,7 @@
 Given a necessity, we need to create a new API to process payments from our clients. 
 That been said, we need:
 
-#### 1. An endpoint to create a payment
+#### 1. An endpoint to create payments
 - The API needs to accept two payment methods: Credit Card and Boleto. 
 - When the payment method is boleto, we only need to return the boleto's number in our response.
 - When the method is card, we need to return if it was successful or not *(please don't worry about processing the payment, just mock the answers)*.
@@ -38,7 +38,8 @@ Card:
 
 ## Level 2: The Checkout
 
-For those clients that won't integrate with our API, we need to create a simple checkout (or a simple order completion page).
+For those clients that won't integrate with our API, we need to create a simple checkout page (or a simple order completion page).
+
 In this checkout, we need:
 - To insert the buyer information and choose the payment method.
 - To validate if the card is valid and who is the card issuer.

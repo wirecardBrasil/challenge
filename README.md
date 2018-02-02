@@ -15,11 +15,12 @@ Buyer:
 Payment:
  - Amount
  - Type
+ > When the payment is Credit Card
  - Card
- - Holder's Name
- - Card number
- - Card's expiration date
- - CVV (Number behind the card)
+   - Holder's Name
+   - Card number
+   - Card's expiration date
+   - CVV (Number behind the card)
 
 For the boleto method, there are no additional information required.
 

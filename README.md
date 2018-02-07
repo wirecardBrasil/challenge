@@ -1,6 +1,6 @@
 # Moip Technical Challenge
 
-At Moip we cherish our startup culture and our engineers are active participants in the innovation process. On this challenge, ee’ll be looking at how you organize your code, your knowledge of design patterns, data persistence, unit testing, TDD, etc.
+At Moip we cherish our startup culture and our engineers are active participants in the innovation process. On this challenge, we’ll be looking at how you organize your code, your knowledge of design patterns, data persistence, unit testing, TDD, etc.
 
 You’ll need to build a simple application to provide an API for payment to your customers and a checkout for who don't want to integrate with your API. In other words, you'll recreate a small part of the Moip :)
 

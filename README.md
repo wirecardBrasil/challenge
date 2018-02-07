@@ -60,3 +60,4 @@ Please take a time to write a READ-ME file explaining how to run your project, t
 Good luck!
 
 *PS: Using docker is a plus and we want unit tests! :D*
+*PS2: Look to our public repository (https://github.com/moip). Maybe something can help you in this test :D*

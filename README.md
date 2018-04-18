@@ -6,11 +6,11 @@ You’ll need to build a simple application to provide an API for payment to our
 
 ## Level 1: The API
 
-We need to create a new API to process payments for our customers. 
+We need to create a new API to process payments for our customers.
 That been said, we need:
 
 #### 1. An endpoint to create payments
-- The API needs to accept two payment methods: Credit Card and Boleto. 
+- The API needs to accept two payment methods: Credit Card and Boleto.
 - When the payment method is boleto, we only need to return the boleto's number in our response.
 - When the method is card, we need to return if it was successful or not *(please don't worry about processing the payment, just mock the answers)*.
 - The API must receive the information of the buyer, customer and payment. The information needed is the following:
@@ -27,7 +27,7 @@ Payment:
  - Amount
  - Type
  - Card (when the payment type is credit card)
- 
+
 Card:
  - Card holder name
  - Card number
@@ -43,6 +43,8 @@ Card:
 ## Level 2: The Checkout
 
 For those customers that won't integrate with our API, we need to create a simple checkout page (or a simple order completion page).
+
+You don't need to care about design or layout, this step is focused on seeing how you integrate APIs.
 
 In this checkout, we need:
 - To insert the buyer information and choose the payment method.

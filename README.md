@@ -39,28 +39,33 @@ Card:
 #### 2. An endpoint to check the payment status
 - The API needs to return all the information about the payment, as well as the status of that payment.
 
+#### 3. Unit Tests
+Unit tests are required
 
 ## Level 2: The Checkout
 
-For those customers that won't integrate with our API, we need to create a simple checkout page (or a simple order completion page).
+We need a way to use the API: It could be a simple checkout page (or a simple order completion page, you don't need to care about design or layout), some `curl`'s examples or `Postman`'s documentation.
 
-You don't need to care about design or layout, this step is focused on seeing how you integrate APIs.
+This step is focused on seeing how you integrate APIs.
 
 In this checkout, we need:
-- To insert the buyer information and choose the payment method.
+- To send the buyer information with the payment method.
 - To validate if the card is valid and who is the card issuer.
 - To simulate a form of identification of the buyer that will be sent to the API.
-- To show on the screen if the transaction was successful or not.
+- To return if the transaction was successful or not.
 - To persist and consume the data effectively for this test.
 
+## Level 3: The documentation
+
+Please take a time to write a README file explaining how to:
+- Run your project
+- The architecture and the design adopted to solve the challenges.
 
 # Additional informations
 This challenge can be done in any language and any database.
 
-Please take a time to write a README file explaining how to run your project, the architecture and the design adopted to solve the challenges.
-
 Good luck!
 
-*PS: Using docker is a plus and we want unit tests! :D*
+*PS: Using docker is a plus! :D*
 
 *PS2: Look to our public repository (https://github.com/moip). Maybe something can help you in this test :D*

@@ -69,6 +69,7 @@ You must show at least the following data:
 <img src="https://github.com/moip/challenge/blob/mobile_challenge/mobile/order%20detail.png" width="360">
 
 #### About the challenge
+* You don't need to follow the same design as showed on the screenshots, feel free to create your own design if you want to. There's no need to add aditional info that wasn't asked, such as "remember your password" and "create account" on the login page.
 * It must be written in java, kotlin or swift.
 * You should store the login data. If you reopen the app, it shouldn't ask for the login again, it must go direct to the order list screen.
 * When you click in one of the orders at the list order screen, you must show another screen with de order details.

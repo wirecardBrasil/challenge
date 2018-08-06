@@ -26,7 +26,7 @@ The response will data needed to access the others requests.
 } 
 ```
 
-<img src="https://github.com/moip/challenge/blob/mobile_challenge/mobile/login.png" width="360">
+<img src="https://github.com/moip/challenge/blob/master/mobile/login.png" width="360">
 
 In order to authorize all other requests, you will have to add the following authorization to the Header:
 `"Authorization", "OAuth ACCESS_TOKEN"`
@@ -44,7 +44,8 @@ You must show at least the following data:
 * Current Status
 * Current status date
 
-<img src="https://github.com/moip/challenge/blob/mobile_challenge/mobile/order%20list.png" width="360">
+
+<img src="https://github.com/moip/challenge/blob/master/mobile/order%20list.png" width="360">
 
 ##### Order detail screen
 Make a `GET` call at url https://sandbox.moip.com.br/v2/orders/ORDER_ID with the given authorization at the Header. You can see the JSON response as well its description and other details at the link above. 
@@ -66,7 +67,7 @@ You must show at least the following data:
 * Liquid value
 * Number of payments
 
-<img src="https://github.com/moip/challenge/blob/mobile_challenge/mobile/order%20detail.png" width="360">
+<img src="https://github.com/moip/challenge/blob/master/mobile/order%20detail.png" width="360">
 
 #### About the challenge
 * You don't need to follow the same design as showed on the screenshots, feel free to create your own design if you want to. There's no need to add aditional info that wasn't asked, such as "remember your password" and "create account" on the login page.

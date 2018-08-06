@@ -26,6 +26,8 @@ The response will data needed to access the others requests.
 } 
 ```
 
+<img src="https://github.com/moip/challenge/blob/mobile_challenge/mobile/login.png" width="360">
+
 In order to authorize all other requests, you will have to add the following authorization to the Header:
 `"Authorization", "OAuth ACCESS_TOKEN"`
 
@@ -39,6 +41,8 @@ You must show at least the following data:
 * Own id
 * Current Status
 * Current status date
+
+<img src="https://github.com/moip/challenge/blob/mobile_challenge/mobile/order%20list.png" width="360">
 
 ##### Order detail screen
 Make a `GET` call at url https://sandbox.moip.com.br/v2/orders/ORDER_ID with the given authorization at the Header. You can see the JSON response as well its description and other details at the link above. 
@@ -59,6 +63,8 @@ You must show at least the following data:
 * Tax
 * Liquid value
 * Number of payments
+
+<img src="https://github.com/moip/challenge/blob/mobile_challenge/mobile/order%20detail.png" width="360">
 
 #### About the challenge
 * It must be written in java, kotlin or swift.

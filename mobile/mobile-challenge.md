@@ -3,10 +3,10 @@
 Develop an app that consumes Moip API. The app should login and retrieve the authentication and list all orders from the account logged; clicking in one of the orders should open its details. You may follow the given mockups as guidelines for your challenge.
 
 ##### Login screen
-In order to retrieve the authorization data you must do a `POST` operation at https://connect-sandbox.moip.com.br/oauth/token with the following JSON.
+In order to retrieve the authorization data you must do a `POST` operation at https://connect-sandbox.moip.com.br/oauth/token with the following data as `form-urlencoded`.
+
 `REQUEST`
 ```json
-{
   "client_id": "APP-H1DR0RPHV7SP",
   "client_secret": "05acb6e128bc48b2999582cd9a2b9787",
   "grant_type": "password",
@@ -14,7 +14,6 @@ In order to retrieve the authorization data you must do a `POST` operation at ht
   "password": "#{APP USER MOIP PASSWORD}",
   "device_id": "um id para o device",
   "scope": " APP_ADMIN"
-}
 ```
 The response will data needed to access the others requests. 
 `RESPONSE`

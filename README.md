@@ -1,6 +1,6 @@
-# Moip Technical Challenge
+# Wirecard Technical Challenge
 
-At Moip we cherish our startup culture and our engineers are active participants in the innovation process. On this challenge, we’ll be looking at how you organize your code, your knowledge of design patterns, data persistence, unit testing, TDD, etc.
+At Wirecard we cherish our startup culture and our engineers are active participants in the innovation process. On this challenge, we’ll be looking at how you organize your code, your knowledge of design patterns, data persistence, unit testing, TDD, etc.
 
 You’ll need to build a simple application to provide an API for payment to our customers and a checkout for who don't want to integrate with our API. In other words, you'll recreate a small part of the Moip :)
 
@@ -68,4 +68,4 @@ Good luck!
 
 *PS: Using docker is a plus! :D*
 
-*PS2: Look to our public repository (https://github.com/moip). Maybe something can help you in this test :D*
+*PS2: Look to our public repository (https://github.com/wirecardBrasil). Maybe something can help you in this test :D*

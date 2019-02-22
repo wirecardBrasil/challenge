@@ -73,6 +73,8 @@ You must show at least the following data:
 * It must be written in java, kotlin or swift.
 * You should store the login data. If you reopen the app, it shouldn't ask for the login again, it must go direct to the order list screen.
 * When you click in one of the orders at the list order screen, you must show another screen with de order details.
+* Unit tests are required
 
 #### Pluses
 * Pagination with endless scroll at the order list screen.
+* UI tests

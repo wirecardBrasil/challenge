@@ -19,7 +19,7 @@ You can download [MongoDB](https://www.mongodb.com/)
 Use the following commands to run this project:
 
 ```
-# Go to challenge folder
+# Go to challenge-1 folder
 $ cd challenge-1
 # Install dependencies
 $ npm install

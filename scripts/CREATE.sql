@@ -8,12 +8,21 @@ CREATE TABLE IF NOT EXISTS regClient(
 	id BIGINT AUTO_INCREMENT NOT NULL,
     CONSTRAINT PK_regClient_id PRIMARY KEY(id),
     clientName VARCHAR(100) NOT NULL,
+    email VARCHAR(50),
+    cpfCnpj VARCHAR(14)
+);
+
+CREATE TABLE IF NOT EXISTS regBuyer(
+	id BIGINT AUTO_INCREMENT NOT NULL,
+    CONSTRAINT PK_regBuyert_id PRIMARY KEY(id),
+    clientName VARCHAR(100) NOT NULL,
     email VARCHAR(50) NOT NULL,
     cpfCnpj VARCHAR(14) NOT NULL
 );
 
 /*Index to otimize queries by cpf/cnpj*/
 CREATE INDEX regClient_cpfCnpj ON regClient(cpfCnpj);
+CREATE INDEX regBuyer_cpfCnpj ON regBuyer(cpfCnpj);
 
 /*To storage payment types*/
 CREATE TABLE IF NOT EXISTS paymentType(
@@ -36,6 +45,9 @@ CREATE TABLE IF NOT EXISTS payment(
     idClient BIGINT NOT NULL,
     CONSTRAINT FK_payment_idClient FOREIGN KEY(idClient)
 		REFERENCES regClient(id),
+	idBuyer BIGINT NOT NULL,
+    CONSTRAINT FK_payment_idBuyer FOREIGN KEY(idBuyer)
+		REFERENCES regBuyer(id),
 	idPaymentType SMALLINT NOT NULL,
 	CONSTRAINT FK_payment_idPaymentType FOREIGN KEY(idPaymentType)
 		REFERENCES paymentType(id),

@@ -1,4 +1,4 @@
-package payment
+package main
 
 import (
 	"net/http"

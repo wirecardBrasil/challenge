@@ -1,4 +1,4 @@
-package payment
+package main
 
 import (
 	"net/http"
@@ -19,5 +19,17 @@ var routes = Routes{
 		"GET",
 		"/",
 		Index,
+	},
+	Route{
+		"Client",
+		"GET",
+		"/client",
+		ConsultAllClients,
+	},
+	Route{
+		"Client",
+		"POST",
+		"/client",
+		InsertClient,
 	},
 }

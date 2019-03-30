@@ -1,0 +1,7 @@
+{
+	"database":{
+		"user": "user",
+		"password": "password",
+		"namedb": "wirecardPayment"
+	}
+}

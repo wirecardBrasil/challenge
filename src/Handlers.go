@@ -54,15 +54,14 @@ func InsertClient(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var retClients Clients
-	/*
-		if retClient, customError := InsertClientBD(client); customError {
-			formatErrorResponse(w, 500, customError.IdMessage, customError.Message, customError.TechnicalMessage)
-			return
-			//do something here
-		} */
 	retClient, err, customError := InsertClientBD(client)
 	if err != nil {
-		formatErrorResponse(w, 500, customError.IdMessage, customError.Message, customError.TechnicalMessage)
+		//avoid empty technical message
+		tmessage := customError.TechnicalMessage
+		if tmessage != "" {
+			tmessage = err.Error()
+		}
+		formatErrorResponse(w, 500, customError.IdMessage, customError.Message, tmessage)
 		return
 	}
 	retClients = append(retClients, retClient)

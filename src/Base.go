@@ -47,23 +47,13 @@ func InsertClientBD(client Client) (Client, error, CustomError) {
 			"	? "+
 			") ", client.Name, client.Email, client.Cpf)
 	if err != nil {
-		/*
-			me, ok := err.(*mysql.MySQLError)
-			if !ok {
-				return err
-			}
-			if me.Number == 1062 {
-				return errors.New("It already exists in a database.")
-			}
-			return err*/
-
 		if driverErr, ok := err.(*mysql.MySQLError); ok { // Now the error number is accessible directly
+			//1062 = SQL code to duplicated key.
+			//check duplicated register.
 			if driverErr.Number == 1062 {
 
 				cError.Message = err.Error()
 				cError.TechnicalMessage = "Client already registered."
-
-				//id, err := strconv.ParseInt(vars["id"], 10, 64)
 				cError.IdMessage = int(1062)
 			} else {
 				cError.Message = err.Error()
@@ -81,7 +71,12 @@ func InsertClientBD(client Client) (Client, error, CustomError) {
 
 	id, err := qryInsert.LastInsertId()
 	if err != nil {
-		panic(err.Error())
+
+		cError.Message = err.Error()
+		cError.TechnicalMessage = "Could'nt get inserted id."
+		cError.IdMessage = int(1230)
+
+		return clientReturn, err, cError
 	}
 
 	clientReturn.Id = id

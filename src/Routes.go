@@ -23,6 +23,12 @@ var routes = Routes{
 	Route{
 		"Client",
 		"GET",
+		"/client/{id}",
+		ConsultClient,
+	},
+	Route{
+		"Client",
+		"GET",
 		"/client",
 		ConsultAllClients,
 	},

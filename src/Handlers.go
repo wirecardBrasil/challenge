@@ -3,10 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"io"
 	"io/ioutil"
 	"net/http"
-	//"github.com/gorilla/mux"
+	"strconv"
 )
 
 func formatErrorResponse(w http.ResponseWriter, statusCode int, internalState int, message string, technicalMessage string) {
@@ -28,8 +29,9 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func InsertClient(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	var client Client
-	var ret ReturnClient
+	//var ret ReturnClients
 	//var retClient Client
 
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
@@ -51,24 +53,46 @@ func InsertClient(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var retClients Clients
 	retClient := InsertClientBD(client)
-	ret.Return.State = 1
-	ret.Return.Message = "Client(s) inserted successfully"
-	ret.Client = retClient
+	retClients = append(retClients, retClient)
 
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusCreated)
-	if err := json.NewEncoder(w).Encode(ret); err != nil {
+	//ret.Return.State = 1
+	//ret.Return.Message = "Client(s) inserted successfully"
+	//ret.Clients = retClients
+
+	//w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	//w.WriteHeader(http.StatusCreated)
+	if err := json.NewEncoder(w).Encode(FormatClientConsult(retClients, 1, "Client(s) inserted successfully")); err != nil {
 		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
 	}
+	w.WriteHeader(http.StatusCreated)
 
 }
 
 func ConsultAllClients(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	if err := json.NewEncoder(w).Encode(ConsultAllClientsDB()); err != nil {
+	if err := json.NewEncoder(w).Encode(FormatClientConsult(ConsultAllClientsDB(), 1, "")); err != nil {
 		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
 	}
+	w.WriteHeader(http.StatusOK)
+}
+
+func ConsultClient(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	//var ret ReturnClients
+	vars := mux.Vars(r)
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
+	if err != nil {
+
+		formatErrorResponse(w, 422, 422, "Id to be consulted not found.", err.Error())
+	}
+
+	if err := json.NewEncoder(w).Encode(FormatClientConsult(ConsultClientDB(id), 1, "")); err != nil {
+		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
+	}
+
 	w.WriteHeader(http.StatusOK)
 }
 

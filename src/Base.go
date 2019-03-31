@@ -87,3 +87,35 @@ func ConsultAllClientsDB() Clients {
 	defer db.Close()
 	return clients
 }
+
+func ConsultClientDB(id int64) Clients {
+	db := dbConn()
+	client := Client{}
+	clients := []Client{}
+	qryConsult, err := db.Query("SELECT "+
+		"	id, "+
+		"	clientName, "+
+		"	email, "+
+		"	cpfCnpj "+
+		"FROM "+
+		"	regCLient "+
+		"WHERE "+
+		"	id = ? "+
+		"ORDER BY "+
+		"	id desc ", id)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for qryConsult.Next() {
+		err = qryConsult.Scan(&client.Id, &client.Name, &client.Email, &client.Cpf)
+		if err != nil {
+			panic(err.Error())
+		}
+		clients = append(clients, client)
+	}
+
+	defer db.Close()
+	return clients
+
+}

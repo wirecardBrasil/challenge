@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS regClient(
     CONSTRAINT PK_regClient_id PRIMARY KEY(id),
     clientName VARCHAR(100) NOT NULL,
     email VARCHAR(50),
-    cpfCnpj VARCHAR(14)
+    cpfCnpj VARCHAR(14) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS regBuyer(
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS regBuyer(
     CONSTRAINT PK_regBuyert_id PRIMARY KEY(id),
     clientName VARCHAR(100) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    cpfCnpj VARCHAR(14) NOT NULL
+    cpfCnpj VARCHAR(14) NOT NULL UNIQUE
 );
 
 /*Index to otimize queries by cpf/cnpj*/

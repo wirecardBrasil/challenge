@@ -23,3 +23,9 @@ type ReturnClients struct {
 	Return  ReturnStruct `json:"return"`
 	Clients Clients      `json:clients`
 }
+
+type CustomError struct {
+	Message          string
+	TechnicalMessage string
+	IdMessage        int
+}

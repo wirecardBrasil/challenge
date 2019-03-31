@@ -3,8 +3,9 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/go-sql-driver/mysql"
 	"os"
+	//"strconv"
 )
 
 func dbConn() (db *sql.DB) {
@@ -29,8 +30,12 @@ func dbConn() (db *sql.DB) {
 	return db
 }
 
-func InsertClientBD(client Client) Client {
+func InsertClientBD(client Client) (Client, error, CustomError) {
 	db := dbConn()
+	var cError CustomError
+
+	clientReturn := Client{}
+
 	qryInsert, err := db.Exec(
 		"INSERT INTO regClient( "+
 			"	clientName, "+
@@ -42,7 +47,36 @@ func InsertClientBD(client Client) Client {
 			"	? "+
 			") ", client.Name, client.Email, client.Cpf)
 	if err != nil {
-		panic("565656" + err.Error())
+		/*
+			me, ok := err.(*mysql.MySQLError)
+			if !ok {
+				return err
+			}
+			if me.Number == 1062 {
+				return errors.New("It already exists in a database.")
+			}
+			return err*/
+
+		if driverErr, ok := err.(*mysql.MySQLError); ok { // Now the error number is accessible directly
+			if driverErr.Number == 1062 {
+
+				cError.Message = err.Error()
+				cError.TechnicalMessage = "Client already registered."
+
+				//id, err := strconv.ParseInt(vars["id"], 10, 64)
+				cError.IdMessage = int(1062)
+			} else {
+				cError.Message = err.Error()
+				cError.TechnicalMessage = "DB fail registering client."
+				cError.IdMessage = int(driverErr.Number)
+			}
+		} else {
+			cError.Message = err.Error()
+			cError.TechnicalMessage = "Fail registering client."
+			cError.IdMessage = int(driverErr.Number)
+
+		}
+		return clientReturn, err, cError
 	}
 
 	id, err := qryInsert.LastInsertId()
@@ -50,14 +84,13 @@ func InsertClientBD(client Client) Client {
 		panic(err.Error())
 	}
 
-	clientReturn := Client{}
 	clientReturn.Id = id
 	clientReturn.Name = client.Name
 	clientReturn.Email = client.Email
 	clientReturn.Cpf = client.Cpf
 
 	defer db.Close()
-	return clientReturn
+	return clientReturn, nil, cError
 }
 
 func ConsultAllClientsDB() Clients {

@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	//"fmt"
 	"github.com/go-sql-driver/mysql"
 	"os"
 	//"strconv"
@@ -52,17 +53,17 @@ func InsertClientBD(client Client) (Client, error, CustomError) {
 			//check duplicated register.
 			if driverErr.Number == 1062 {
 
-				cError.Message = err.Error()
-				cError.TechnicalMessage = "Client already registered."
+				cError.Message = "Client already registered."
+				cError.TechnicalMessage = err.Error()
 				cError.IdMessage = int(1062)
 			} else {
-				cError.Message = err.Error()
-				cError.TechnicalMessage = "DB fail registering client."
+				cError.Message = "DB fail registering client."
+				cError.TechnicalMessage = err.Error()
 				cError.IdMessage = int(driverErr.Number)
 			}
 		} else {
-			cError.Message = err.Error()
-			cError.TechnicalMessage = "Fail registering client."
+			cError.Message = "Fail registering client."
+			cError.TechnicalMessage = err.Error()
 			cError.IdMessage = int(driverErr.Number)
 
 		}
@@ -72,8 +73,8 @@ func InsertClientBD(client Client) (Client, error, CustomError) {
 	id, err := qryInsert.LastInsertId()
 	if err != nil {
 
-		cError.Message = err.Error()
-		cError.TechnicalMessage = "Could'nt get inserted id."
+		cError.Message = "Could'nt get inserted id."
+		cError.TechnicalMessage = err.Error()
 		cError.IdMessage = int(1230)
 
 		return clientReturn, err, cError
@@ -146,4 +147,192 @@ func ConsultClientDB(id int64) Clients {
 	defer db.Close()
 	return clients
 
+}
+
+func ClientRegistered(id int64) bool {
+	db := dbConn()
+	var count int
+	err := db.QueryRow("SELECT "+
+		"	COUNT(id) "+
+		"FROM "+
+		"	regClient "+
+		"WHERE "+
+		"	id = ? "+
+		"ORDER BY "+
+		"	id desc ", id).Scan(&count)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer db.Close()
+	return count > 0
+}
+
+func BuyerRegistered(cpfCnpj string) bool {
+	db := dbConn()
+	var count int
+	err := db.QueryRow("SELECT "+
+		"	COUNT(id) "+
+		"FROM "+
+		"	regBuyer "+
+		"WHERE "+
+		"	cpfCnpj = ? "+
+		"ORDER BY "+
+		"	id desc ", cpfCnpj).Scan(&count)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	//panic("QUantidade: " + strconv.Itoa(count) + cpfCnpj)
+
+	defer db.Close()
+	return count > 0
+}
+
+func BuyerInfo(cpfCnpj string) (Buyer, error) {
+	db := dbConn()
+	var buyer Buyer
+	err := db.QueryRow("SELECT "+
+		"	id, "+
+		"	clientName, "+
+		"	email, "+
+		"	cpfCnpj "+
+		"FROM "+
+		"	regBuyer "+
+		"WHERE "+
+		"	cpfCnpj = ? "+
+		"ORDER BY "+
+		"	id desc "+
+		"LIMIT 1 ", cpfCnpj).Scan(&buyer.Id, &buyer.Name, &buyer.Email, &buyer.Cpf)
+	if err != nil {
+		return buyer, err
+	}
+	defer db.Close()
+	//panic("Buyer ID " + strconv.FormatInt(buyer.Id, 10))
+	return buyer, nil
+}
+
+func SaveBuyer(buyer Buyer) (Buyer, error, CustomError) {
+
+	var cError CustomError
+
+	buyerReturn := Buyer{}
+
+	db := dbConn()
+	qryInsert, err := db.Exec(
+		"INSERT INTO regBuyer( "+
+			"	clientName, "+
+			"	email,  "+
+			"	cpfCnpj "+
+			") VALUES ( "+
+			"	?, "+
+			"	?, "+
+			"	? "+
+			") ", buyer.Name, buyer.Email, buyer.Cpf)
+	if err != nil {
+		if driverErr, ok := err.(*mysql.MySQLError); ok { // Now the error number is accessible directly
+			//1062 = SQL code to duplicated key.
+			//check duplicated register.
+			if driverErr.Number == 1062 {
+
+				cError.Message = "Buyer already registered."
+				cError.TechnicalMessage = err.Error()
+				cError.IdMessage = int(1062)
+			} else {
+				cError.Message = "DB fail registering buyer."
+				cError.TechnicalMessage = err.Error()
+				cError.IdMessage = int(driverErr.Number)
+			}
+		} else {
+			cError.Message = "Fail registering buyer."
+			cError.TechnicalMessage = err.Error()
+			cError.IdMessage = int(driverErr.Number)
+
+		}
+		return buyerReturn, err, cError
+	}
+
+	id, err := qryInsert.LastInsertId()
+	if err != nil {
+
+		cError.Message = "Could'nt get inserted id."
+		cError.TechnicalMessage = err.Error()
+		cError.IdMessage = int(1230)
+
+		return buyerReturn, err, cError
+	}
+
+	buyerReturn.Id = id
+	buyerReturn.Name = buyer.Name
+	buyerReturn.Email = buyer.Email
+	buyerReturn.Cpf = buyer.Cpf
+
+	defer db.Close()
+	return buyerReturn, nil, cError
+}
+
+func SavePayment(payment Payment) (Payment, error) {
+	db := dbConn()
+	var paymentRet = Payment{}
+	qryInsert, err := db.Exec(
+		"INSERT INTO payment "+
+			"( "+
+			"    idClient, "+
+			"    idBuyer, "+
+			"    idPaymentType, "+
+			"    amount "+
+			") VALUES ( "+
+			"	?, "+
+			"	?, "+
+			"	?, "+
+			"	? "+
+			") ", payment.Client.Id, payment.Buyer.Id, payment.PaymentInfo.PaymentType, payment.PaymentInfo.Amount)
+
+	//	panic("Inicio:" + strconv.FormatInt(payment.Client.Id, 10) + " " + strconv.FormatInt(payment.Buyer.Id, 10) + " " + strconv.Itoa(payment.PaymentInfo.PaymentType) + " " + fmt.Sprintf("%f", payment.PaymentInfo.Amount))
+	if err != nil {
+		return paymentRet, err
+	}
+
+	id, err := qryInsert.LastInsertId()
+	if err != nil {
+		return paymentRet, err
+	}
+
+	paymentRet = payment
+	paymentRet.PaymentInfo.PaymentID = id
+	defer db.Close()
+	return paymentRet, nil
+}
+
+func SaveCardPayment(payment Payment) (Payment, error) {
+	db := dbConn()
+	var paymentRet = Payment{}
+
+	//stores only last 4 characters of card number
+	payment.PaymentInfo.Card.Number = string(payment.PaymentInfo.Card.Number[len(payment.PaymentInfo.Card.Number)-4:])
+	_, err := db.Exec(
+		"INSERT INTO cardPayment( "+
+			"    idPayment, "+
+			"    holderName, "+
+			"    cardFinalNumber, "+
+			"    expirationDate "+
+			") VALUES( "+
+			"	?, "+
+			"    ?, "+
+			"    ?, "+
+			"    STR_TO_DATE(? , '%m/%y') "+
+			") ", payment.PaymentInfo.PaymentID, payment.PaymentInfo.Card.HolderName, payment.PaymentInfo.Card.Number, payment.PaymentInfo.Card.ExpirationDate)
+	if err != nil {
+		return paymentRet, err
+	}
+
+	/*
+		id, err := qryInsert.LastInsertId()
+		if err != nil {
+			return paymentRet, err
+		}
+	*/
+	paymentRet = payment
+	defer db.Close()
+	return paymentRet, nil
 }

@@ -1,7 +1,13 @@
 package main
 
+/*
+import (
+	//"fmt"
+	"time"
+)*/
+
 type Person struct {
-	Id    int64  `json:"id"`
+	Id    int64  `json:"id,omitempty""`
 	Name  string `json:"name,omitempty"`
 	Email string `json:"email,omitempty"`
 	Cpf   string `json:"cpf,omitempty"`
@@ -28,4 +34,38 @@ type CustomError struct {
 	Message          string
 	TechnicalMessage string
 	IdMessage        int
+}
+
+type CardInfos struct {
+	HolderName     string `json:"holderName,omitempty"`
+	Number         string `json:"number,omitempty"`
+	ExpirationDate string `json:"expirationDate,omitempty"`
+	Cvv            string `json:"cvv,omitempty"`
+}
+
+type PaymentInfo struct {
+	PaymentID   int64     `json:"paymentId,omitepmpty"`
+	Amount      float64   `json:"amount,omitempty"`
+	PaymentType int       `json:"type,omitempty"`
+	Card        CardInfos `json:"card,omitempty"`
+}
+
+type Payment struct {
+	Client      Client      `json:"client,omitempty"`
+	Buyer       Buyer       `json:"buyer,omitempty"`
+	PaymentInfo PaymentInfo `json:"payment,omitempty"`
+}
+
+type BoletoReturn struct {
+	Number string `json:"number,omitempty"`
+}
+
+type CardReturn struct {
+	Successful bool `json:"successful,omitempty"`
+}
+
+type PaymentReturn struct {
+	Return ReturnStruct `json:"return,omitempty"`
+	Card   CardReturn   `json:"card,omitempty"`
+	Boleto BoletoReturn `json:"boleto,omitempty"`
 }

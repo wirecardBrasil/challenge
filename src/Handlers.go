@@ -105,6 +105,40 @@ func ConsultClient(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+func DoPayment(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	var payInfo Payment
+
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+	if err != nil {
+		formatErrorResponse(w, 500, 500, "Json request couldn't be read.", err.Error())
+		return
+	}
+	if err := r.Body.Close(); err != nil {
+		formatErrorResponse(w, 500, 500, "Request body couldn't be closed.", err.Error())
+		return
+	}
+	if err := json.Unmarshal(body, &payInfo); err != nil {
+		formatErrorResponse(w, 422, 422, "Request should be a valid json.", err.Error())
+		return
+	}
+
+	//var retPayment PaymentReturn
+
+	retPayment := PaymentMethod(payInfo)
+	/*if err != nil {
+		formatErrorResponse(w, 500, 10234, "Couldn't process payment.", err.Error())
+		return
+	}*/
+
+	if err := json.NewEncoder(w).Encode(retPayment); err != nil {
+		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
+	}
+	w.WriteHeader(http.StatusCreated)
+
+}
+
 func hello() string {
 	return "Welcome!"
 

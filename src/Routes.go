@@ -38,4 +38,10 @@ var routes = Routes{
 		"/client",
 		InsertClient,
 	},
+	Route{
+		"Payment",
+		"POST",
+		"/payment",
+		DoPayment,
+	},
 }

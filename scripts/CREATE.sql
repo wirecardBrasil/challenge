@@ -51,6 +51,9 @@ CREATE TABLE IF NOT EXISTS payment(
 	idPaymentType SMALLINT NOT NULL,
 	CONSTRAINT FK_payment_idPaymentType FOREIGN KEY(idPaymentType)
 		REFERENCES paymentType(id),
+	idPaymentState SMALLINT NOT NULL,
+	CONSTRAINT FK_payment_idPaymentStare FOREIGN KEY(idPaymentState)
+		REFERENCES paymentState(id),
 	amount DECIMAL(15, 2) NOT NULL
 );
 

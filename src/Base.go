@@ -274,19 +274,23 @@ func SaveBuyer(buyer Buyer) (Buyer, error, CustomError) {
 func SavePayment(payment Payment) (Payment, error) {
 	db := dbConn()
 	var paymentRet = Payment{}
+	paymentState := 1
+
 	qryInsert, err := db.Exec(
 		"INSERT INTO payment "+
 			"( "+
 			"    idClient, "+
 			"    idBuyer, "+
 			"    idPaymentType, "+
-			"    amount "+
+			"    amount, "+
+			"    idPaymentState "+
 			") VALUES ( "+
 			"	?, "+
 			"	?, "+
 			"	?, "+
+			"	?, "+
 			"	? "+
-			") ", payment.Client.Id, payment.Buyer.Id, payment.PaymentInfo.PaymentType, payment.PaymentInfo.Amount)
+			") ", payment.Client.Id, payment.Buyer.Id, payment.PaymentInfo.PaymentType, payment.PaymentInfo.Amount, paymentState)
 
 	//	panic("Inicio:" + strconv.FormatInt(payment.Client.Id, 10) + " " + strconv.FormatInt(payment.Buyer.Id, 10) + " " + strconv.Itoa(payment.PaymentInfo.PaymentType) + " " + fmt.Sprintf("%f", payment.PaymentInfo.Amount))
 	if err != nil {
@@ -300,6 +304,7 @@ func SavePayment(payment Payment) (Payment, error) {
 
 	paymentRet = payment
 	paymentRet.PaymentInfo.PaymentID = id
+	paymentRet.PaymentInfo.PaymentState = paymentState
 	defer db.Close()
 	return paymentRet, nil
 }

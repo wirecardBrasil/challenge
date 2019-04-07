@@ -24,21 +24,36 @@ func formatErrorResponse(w http.ResponseWriter, statusCode int, internalState in
 	}
 }
 
+func formatJsonReturn(w http.ResponseWriter, statusCode int, jsonObj interface{}) {
+	jsonData, err := json.Marshal(jsonObj)
+	if err != nil {
+		// write your error to w, then return
+		formatErrorResponse(w, 500, 500, "Couldn't parse json response.", "We've couldn't get response.")
+	}
+	w.WriteHeader(statusCode)
+	w.Write(jsonData)
+}
+
+func formatSuccessfulResponse(w http.ResponseWriter, statusCode int) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(statusCode)
+}
+
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Welcome!")
 }
 
 func InsertClient(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
 	var client Client
-	//var ret ReturnClients
-	//var retClient Client
 
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
 		formatErrorResponse(w, 500, 500, "Json request couldn't be read.", err.Error())
 		return
 	}
+
 	if err := r.Body.Close(); err != nil {
 		formatErrorResponse(w, 500, 500, "Request body couldn't be closed.", err.Error())
 		return
@@ -66,33 +81,18 @@ func InsertClient(w http.ResponseWriter, r *http.Request) {
 	}
 	retClients = append(retClients, retClient)
 
-	//ret.Return.State = 1
-	//ret.Return.Message = "Client(s) inserted successfully"
-	//ret.Clients = retClients
-
-	//w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	//w.WriteHeader(http.StatusCreated)
-	if err := json.NewEncoder(w).Encode(FormatClientConsult(retClients, 1, "Client(s) inserted successfully")); err != nil {
-		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
-		return
-	}
-	w.WriteHeader(http.StatusCreated)
+	formatJsonReturn(w, http.StatusCreated, retClients)
 
 }
 
 func ConsultAllClients(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	if err := json.NewEncoder(w).Encode(FormatClientConsult(ConsultAllClientsDB(), 1, "")); err != nil {
-		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
-		return
-	}
-	w.WriteHeader(http.StatusOK)
+	formatJsonReturn(w, http.StatusOK, FormatClientConsult(ConsultAllClientsDB(), 1, ""))
 }
 
 func ConsultClient(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	//var ret ReturnClients
 	vars := mux.Vars(r)
 	id, err := strconv.ParseInt(vars["id"], 10, 64)
 	if err != nil {
@@ -101,12 +101,7 @@ func ConsultClient(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := json.NewEncoder(w).Encode(FormatClientConsult(ConsultClientDB(id), 1, "")); err != nil {
-		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
+	formatJsonReturn(w, http.StatusOK, FormatClientConsult(ConsultClientDB(id), 1, ""))
 }
 
 func DoPayment(w http.ResponseWriter, r *http.Request) {
@@ -131,16 +126,8 @@ func DoPayment(w http.ResponseWriter, r *http.Request) {
 	//var retPayment PaymentReturn
 
 	retPayment := PaymentMethod(payInfo)
-	/*if err != nil {
-		formatErrorResponse(w, 500, 10234, "Couldn't process payment.", err.Error())
-		return
-	}*/
 
-	if err := json.NewEncoder(w).Encode(retPayment); err != nil {
-		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
-		return
-	}
-	w.WriteHeader(http.StatusCreated)
+	formatJsonReturn(w, http.StatusCreated, retPayment)
 
 }
 
@@ -162,9 +149,5 @@ func UpdatePaymentState(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := json.NewEncoder(w).Encode(AlterPaymentState(idpayment, idstate)); err != nil {
-		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
-		return
-	}
-	w.WriteHeader(http.StatusOK)
+	formatJsonReturn(w, http.StatusOK, AlterPaymentState(idpayment, idstate))
 }

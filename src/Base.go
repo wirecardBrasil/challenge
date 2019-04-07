@@ -361,7 +361,7 @@ func AlterPaymentStateDB(idPayment int64, idState int) (bool, string) {
 		return false, err.Error()
 	}
 	if lines < 1 {
-		return false, "Couldn't update register. Check the payment id."
+		return false, "Couldn't update register. Check the payment id and state id."
 	}
 	return true, ""
 

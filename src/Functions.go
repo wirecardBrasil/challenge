@@ -97,7 +97,7 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 	//Boleto
 	if payInfo.PaymentInfo.PaymentType == 1 {
 		//Save at database
-		payReturn.Boleto.Number = BoletoPayment()
+		payReturn.Payment.Boleto.Number = BoletoPayment()
 
 	} else {
 		if payInfo.PaymentInfo.PaymentType == 2 {
@@ -110,7 +110,7 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 			}
 
 		}
-		payReturn.Card.Successful = CardPayment()
+		payReturn.Payment.Card.Successful = CardPayment()
 	}
 	payReturn.Payment.PaymentId = payInfo.PaymentInfo.PaymentID
 	payReturn.Payment.StateId = payInfo.PaymentInfo.PaymentState

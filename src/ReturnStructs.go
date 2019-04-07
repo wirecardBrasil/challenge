@@ -65,14 +65,16 @@ type CardReturn struct {
 	Successful bool `json:"successful,omitempty"`
 }
 
-type PaymentIds struct {
-	PaymentId int64 `json:"paymentId,omitempty"`
-	StateId   int   `json:"paymentState,omitempty"`
+type PaymentDataReturn struct {
+	PaymentId int64        `json:"paymentId,omitempty"`
+	StateId   int          `json:"paymentState,omitempty"`
+	Card      CardReturn   `json:"card,omitempty"`
+	Boleto    BoletoReturn `json:"boleto,omitempty"`
 }
 
 type PaymentReturn struct {
-	Return  ReturnStruct `json:"return,omitempty"`
-	Card    CardReturn   `json:"card,omitempty"`
-	Boleto  BoletoReturn `json:"boleto,omitempty"`
-	Payment PaymentIds   `json:"payment,omitempty"`
+	Return ReturnStruct `json:"return,omitempty"`
+	//Card    CardReturn   `json:"card,omitempty"`
+	//Boleto  BoletoReturn `json:"boleto,omitempty"`
+	Payment PaymentDataReturn `json:"payment,omitempty"`
 }

@@ -127,7 +127,7 @@ func ConsultClientDB(id int64) Clients {
 		"	email, "+
 		"	cpfCnpj "+
 		"FROM "+
-		"	regCLient "+
+		"	regClient "+
 		"WHERE "+
 		"	id = ? "+
 		"ORDER BY "+
@@ -194,7 +194,7 @@ func BuyerInfo(cpfCnpj string) (Buyer, error) {
 	var buyer Buyer
 	err := db.QueryRow("SELECT "+
 		"	id, "+
-		"	clientName, "+
+		"	buyerName, "+
 		"	email, "+
 		"	cpfCnpj "+
 		"FROM "+
@@ -221,7 +221,7 @@ func SaveBuyer(buyer Buyer) (Buyer, error, CustomError) {
 	db := dbConn()
 	qryInsert, err := db.Exec(
 		"INSERT INTO regBuyer( "+
-			"	clientName, "+
+			"	BuyerName, "+
 			"	email,  "+
 			"	cpfCnpj "+
 			") VALUES ( "+
@@ -342,6 +342,28 @@ func SaveCardPayment(payment Payment) (Payment, error) {
 	return paymentRet, nil
 }
 
+func SaveBoletoPayment(payment Payment) (Payment, error) {
+	var paymentRet = Payment{}
+	db := dbConn()
+
+	_, err := db.Exec(
+		"INSERT INTO boletoPayment( "+
+			"    idPayment, "+
+			"    boletoNumber "+
+			") VALUES( "+
+			"	?, "+
+			"    ? "+
+			") ", payment.PaymentInfo.PaymentID, payment.PaymentInfo.Boleto.Number)
+	if err != nil {
+
+		return paymentRet, err
+	}
+
+	paymentRet = payment
+	defer db.Close()
+	return paymentRet, nil
+}
+
 func AlterPaymentStateDB(idPayment int64, idState int) (bool, string) {
 	db := dbConn()
 
@@ -366,3 +388,61 @@ func AlterPaymentStateDB(idPayment int64, idState int) (bool, string) {
 	return true, ""
 
 }
+
+/*
+
+func PaymentConsultReturn(rows *rows) PaymentConsult {
+	for rows.Next() {
+		err = rows.Scan(&client.Id, &client.Name, &client.Email, &client.Cpf)
+		if err != nil {
+			panic(err.Error())
+		}
+		clients = append(clients, client)
+	}
+}
+*/
+
+/*
+func ConsultPaymentByIdBD(idPayment int64) Payments {
+	db := dbConn()
+	payment := Payment{}
+	payments := []Payment{}
+	qryConsult, err := db.Query("SELECT  "+
+		"	payment.id, "+
+		"    payment.idClient, "+
+		"    regBuyer.buyerName, "+
+		"    regBuyer.email, "+
+		"    regBuyer.cpfCnpj, "+
+		"    payment.amount, "+
+		"    cardPayment.holderName, "+
+		"    cardPayment.cardFinalNumber, "+
+		"    DATE_FORMAT(cardPayment.expirationDate, '%m/%y') as expirationDate, "+
+		"    idPaymentType, "+
+		"    idPaymentState, "+
+		"    boletoPayment.boletoNumber "+
+		"FROM "+
+		"	payment "+
+		"	LEFT JOIN regBuyer "+
+		"		on payment.idBuyer = regBuyer.id "+
+		"	LEFT JOIN cardPayment "+
+		"		on cardPayment.idPayment = payment.id "+
+		"	LEFT JOIN boletoPayment "+
+		"		on boletoPayment.idPayment = payment.id "+
+		"WHERE  "+
+		"	payment.id = ? ", idPayment)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for qryConsult.Next() {
+		err = qryConsult.Scan(&payment.Id, &payment.IdClient, &payment.IdBuyer, &payment.IdPaymentType, &payment.IdPaymentType, &payment.IdPaymentType)
+		if err != nil {
+			panic(err.Error())
+		}
+		clients = append(clients, client)
+	}
+
+	defer db.Close()
+	return clients
+
+}*/

@@ -44,11 +44,12 @@ type CardInfos struct {
 }
 
 type PaymentInfo struct {
-	PaymentID    int64     `json:"paymentId,omitepmpty"`
-	Amount       float64   `json:"amount,omitempty"`
-	PaymentType  int       `json:"type,omitempty"`
-	Card         CardInfos `json:"card,omitempty"`
-	PaymentState int       `json:"paymentState,omitempty"`
+	PaymentID    int64        `json:"paymentId,omitepmpty"`
+	Amount       float64      `json:"amount,omitempty"`
+	PaymentType  int          `json:"type,omitempty"`
+	Card         CardInfos    `json:"card,omitempty"`
+	Boleto       BoletoReturn `json:"boleto,omitempty"`
+	PaymentState int          `json:"paymentState,omitempty"`
 }
 
 type Payment struct {
@@ -77,4 +78,11 @@ type PaymentReturn struct {
 	//Card    CardReturn   `json:"card,omitempty"`
 	//Boleto  BoletoReturn `json:"boleto,omitempty"`
 	Payment PaymentDataReturn `json:"payment,omitempty"`
+}
+
+type Payments []Payment
+
+type PaymentConsult struct {
+	Return   ReturnStruct `json:"return,omitempty"`
+	Payments Payments     `json:"payments,omitempty"`
 }

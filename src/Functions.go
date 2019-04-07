@@ -119,7 +119,10 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 	//Boleto
 	if payInfo.PaymentInfo.PaymentType == 1 {
 		//Save at database
-		payReturn.Payment.Boleto.Number = BoletoPayment()
+		boletoNumber := BoletoPayment()
+		payInfo.PaymentInfo.Boleto.Number = boletoNumber
+		payReturn.Payment.Boleto.Number = boletoNumber
+		SaveBoletoPayment(payInfo)
 
 	} else {
 		if payInfo.PaymentInfo.PaymentType == 2 {

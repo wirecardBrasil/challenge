@@ -44,4 +44,10 @@ var routes = Routes{
 		"/payment",
 		DoPayment,
 	},
+	Route{
+		"Payment",
+		"PUT",
+		"/payment/{idpayment}/state/{idstate}",
+		UpdatePaymentState,
+	},
 }

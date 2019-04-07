@@ -144,15 +144,27 @@ func DoPayment(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func hello() string {
-	return "Welcome!"
+func UpdatePaymentState(w http.ResponseWriter, r *http.Request) {
 
-}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	//var ret ReturnClients
+	vars := mux.Vars(r)
+	idpayment, err := strconv.ParseInt(vars["idpayment"], 10, 64)
+	if err != nil {
 
-func validatePaymentType(pType int) bool {
-	if (pType == 1) || (pType == 2) {
-		return true
-	} else {
-		return false
+		formatErrorResponse(w, 422, 422, "Id from payment to be altered not found.", err.Error())
+		return
 	}
+	idstate, err := strconv.Atoi(vars["idstate"])
+	if err != nil {
+
+		formatErrorResponse(w, 422, 422, "Id from state to be altered not found.", err.Error())
+		return
+	}
+
+	if err := json.NewEncoder(w).Encode(AlterPaymentState(idpayment, idstate)); err != nil {
+		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
+		return
+	}
+	w.WriteHeader(http.StatusOK)
 }

@@ -162,3 +162,16 @@ func validatePaymentType(pType int) bool {
 	}
 }
 
+func AlterPaymentState(idPayment int64, idState int) ReturnStruct {
+	var ret ReturnStruct
+	if ok, msg := AlterPaymentStateDB(idPayment, idState); ok {
+		ret.State = 1
+		ret.Message = "Payment state altered successfully."
+		return ret
+	} else {
+		ret.State = 0
+		ret.Message = "We've couldn't altering payment state."
+		ret.TechnicalMessage = msg
+		return ret
+	}
+}

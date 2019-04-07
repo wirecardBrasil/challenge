@@ -342,3 +342,27 @@ func SaveCardPayment(payment Payment) (Payment, error) {
 	return paymentRet, nil
 }
 
+func AlterPaymentStateDB(idPayment int64, idState int) (bool, string) {
+	db := dbConn()
+
+	qryUpdate, err := db.Exec(
+		"UPDATE "+
+			"	payment "+
+			"SET "+
+			"	idPaymentState = ? "+
+			"WHERE "+
+			"	id = ? ", idState, idPayment)
+	if err != nil {
+		return false, err.Error()
+	}
+
+	lines, err := qryUpdate.RowsAffected()
+	if err != nil {
+		return false, err.Error()
+	}
+	if lines < 1 {
+		return false, "Couldn't update register. Check the payment id."
+	}
+	return true, ""
+
+}

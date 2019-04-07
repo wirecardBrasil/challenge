@@ -74,6 +74,7 @@ func InsertClient(w http.ResponseWriter, r *http.Request) {
 	//w.WriteHeader(http.StatusCreated)
 	if err := json.NewEncoder(w).Encode(FormatClientConsult(retClients, 1, "Client(s) inserted successfully")); err != nil {
 		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 
@@ -83,6 +84,7 @@ func ConsultAllClients(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	if err := json.NewEncoder(w).Encode(FormatClientConsult(ConsultAllClientsDB(), 1, "")); err != nil {
 		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
+		return
 	}
 	w.WriteHeader(http.StatusOK)
 }
@@ -96,10 +98,12 @@ func ConsultClient(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 
 		formatErrorResponse(w, 422, 422, "Id to be consulted not found.", err.Error())
+		return
 	}
 
 	if err := json.NewEncoder(w).Encode(FormatClientConsult(ConsultClientDB(id), 1, "")); err != nil {
 		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
+		return
 	}
 
 	w.WriteHeader(http.StatusOK)
@@ -134,6 +138,7 @@ func DoPayment(w http.ResponseWriter, r *http.Request) {
 
 	if err := json.NewEncoder(w).Encode(retPayment); err != nil {
 		formatErrorResponse(w, 500, 500, "Response couldn't be parsed.", err.Error())
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 

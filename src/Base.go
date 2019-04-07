@@ -310,8 +310,8 @@ func SavePayment(payment Payment) (Payment, error) {
 }
 
 func SaveCardPayment(payment Payment) (Payment, error) {
-	db := dbConn()
 	var paymentRet = Payment{}
+	db := dbConn()
 
 	//stores only last 4 characters of card number
 	payment.PaymentInfo.Card.Number = string(payment.PaymentInfo.Card.Number[len(payment.PaymentInfo.Card.Number)-4:])
@@ -341,3 +341,4 @@ func SaveCardPayment(payment Payment) (Payment, error) {
 	defer db.Close()
 	return paymentRet, nil
 }
+

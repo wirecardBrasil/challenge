@@ -6,6 +6,28 @@ import (
 )
 */
 
+func ValidCardInfo(cardInfos CardInfos) (bool, string) {
+	var msg string
+	if cardInfos.HolderName == "" {
+		msg = "Holder name should be especified."
+		return false, msg
+	}
+	if cardInfos.Number == "" {
+		msg = "Card number should be especified."
+		return false, msg
+	}
+	if cardInfos.ExpirationDate == "" {
+		msg = "Expiration date should be especified."
+		return false, msg
+	}
+	if cardInfos.Cvv == "" {
+		msg = "CVV should be especified."
+		return false, msg
+	}
+
+	return true, ""
+}
+
 func FormatClientConsult(cl Clients, state int, msg string) ReturnClients {
 	var retClient ReturnClients
 	if cl == nil {
@@ -101,6 +123,12 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 
 	} else {
 		if payInfo.PaymentInfo.PaymentType == 2 {
+			if ok, msg := ValidCardInfo(payInfo.PaymentInfo.Card); !ok {
+				payReturn.Return.State = 0
+				payReturn.Return.Message = "Chek you card data. " + msg
+				payReturn.Return.TechnicalMessage = "Invalid card data."
+				return payReturn
+			}
 			payInfo, err = SaveCardPayment(payInfo)
 			if err != nil {
 				payReturn.Return.State = 0
@@ -116,7 +144,21 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 	payReturn.Payment.StateId = payInfo.PaymentInfo.PaymentState
 
 	payReturn.Return.State = 1
-	payReturn.Return.Message = "Ok"
+	payReturn.Return.Message = "Payment processed successfully."
 	return payReturn
 
 }
+
+func hello() string {
+	return "Welcome!"
+
+}
+
+func validatePaymentType(pType int) bool {
+	if (pType == 1) || (pType == 2) {
+		return true
+	} else {
+		return false
+	}
+}
+

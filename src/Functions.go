@@ -122,7 +122,13 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 		boletoNumber := BoletoPayment()
 		payInfo.PaymentInfo.Boleto.Number = boletoNumber
 		payReturn.Payment.Boleto.Number = boletoNumber
-		SaveBoletoPayment(payInfo)
+		payInfo, err = SaveBoletoPayment(payInfo)
+		if err != nil {
+			payReturn.Return.State = 0
+			payReturn.Return.Message = "Coudln't save boleto payment."
+			payReturn.Return.TechnicalMessage = err.Error()
+			return payReturn
+		}
 
 	} else {
 		if payInfo.PaymentInfo.PaymentType == 2 {
@@ -177,4 +183,21 @@ func AlterPaymentState(idPayment int64, idState int) ReturnStruct {
 		ret.TechnicalMessage = msg
 		return ret
 	}
+}
+
+func ConsultPaymentID(idPayment int64) PaymentConsult {
+	var retPayment PaymentConsult
+	payments, err := ConsultPaymentByIdBD(idPayment)
+	if err != nil {
+		retPayment.Return.State = 0
+		retPayment.Return.Message = "Fail consulting payment."
+		retPayment.Return.TechnicalMessage = err.Error()
+		return retPayment
+		//formatErrorResponse(w, 422, 422, , )
+		//return
+	}
+	retPayment.Return.State = 1
+	retPayment.Payments = payments
+	return retPayment
+
 }

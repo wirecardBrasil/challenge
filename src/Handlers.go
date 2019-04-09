@@ -151,3 +151,24 @@ func UpdatePaymentState(w http.ResponseWriter, r *http.Request) {
 
 	formatJsonReturn(w, http.StatusOK, AlterPaymentState(idpayment, idstate))
 }
+
+func ClientPaymen(w http.ResponseWriter, r *http.Request) {
+	param1 := r.URL.Query().Get("idclient")
+	//param1s := r.URL.Query()["idclient"]
+	formatErrorResponse(w, 422, 422, param1, "")
+
+}
+
+func ConsultPaymentById(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	vars := mux.Vars(r)
+	idpayment, err := strconv.ParseInt(vars["idpayment"], 10, 64)
+	if err != nil {
+		formatErrorResponse(w, 422, 422, "Id from payment to be consulted not found.", err.Error())
+		return
+	}
+
+	payments := ConsultPaymentID(idpayment)
+
+	formatJsonReturn(w, http.StatusOK, payments)
+}

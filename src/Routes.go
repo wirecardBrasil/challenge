@@ -50,4 +50,10 @@ var routes = Routes{
 		"/payment/{idpayment}/state/{idstate}",
 		UpdatePaymentState,
 	},
+	Route{
+		"Payment",
+		"GET",
+		"/payment/{idpayment}",
+		ConsultPaymentById,
+	},
 }

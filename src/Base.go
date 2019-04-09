@@ -315,6 +315,7 @@ func SaveCardPayment(payment Payment) (Payment, error) {
 
 	//stores only last 4 characters of card number
 	payment.PaymentInfo.Card.Number = string(payment.PaymentInfo.Card.Number[len(payment.PaymentInfo.Card.Number)-4:])
+
 	_, err := db.Exec(
 		"INSERT INTO cardPayment( "+
 			"    idPayment, "+
@@ -402,24 +403,24 @@ func PaymentConsultReturn(rows *rows) PaymentConsult {
 }
 */
 
-/*
-func ConsultPaymentByIdBD(idPayment int64) Payments {
+func ConsultPaymentByIdBD(idPayment int64) (Payments, error) {
 	db := dbConn()
 	payment := Payment{}
 	payments := []Payment{}
+
 	qryConsult, err := db.Query("SELECT  "+
-		"	payment.id, "+
+		"	 payment.id, "+
 		"    payment.idClient, "+
 		"    regBuyer.buyerName, "+
 		"    regBuyer.email, "+
 		"    regBuyer.cpfCnpj, "+
 		"    payment.amount, "+
-		"    cardPayment.holderName, "+
-		"    cardPayment.cardFinalNumber, "+
-		"    DATE_FORMAT(cardPayment.expirationDate, '%m/%y') as expirationDate, "+
+		"	 IFNULL(cardPayment.holderName, '') as holderName, "+
+		"	 IFNULL(cardPayment.cardFinalNumber, '') as cardFinalNumber, "+
+		"    IFNULL(DATE_FORMAT(cardPayment.expirationDate, '%m/%y'), '') as expirationDate, "+
 		"    idPaymentType, "+
 		"    idPaymentState, "+
-		"    boletoPayment.boletoNumber "+
+		"    IFNULL(boletoPayment.boletoNumber, '') as boletoNumber "+
 		"FROM "+
 		"	payment "+
 		"	LEFT JOIN regBuyer "+
@@ -431,18 +432,20 @@ func ConsultPaymentByIdBD(idPayment int64) Payments {
 		"WHERE  "+
 		"	payment.id = ? ", idPayment)
 	if err != nil {
-		panic(err.Error())
+		return payments, err
 	}
 
 	for qryConsult.Next() {
-		err = qryConsult.Scan(&payment.Id, &payment.IdClient, &payment.IdBuyer, &payment.IdPaymentType, &payment.IdPaymentType, &payment.IdPaymentType)
+		err = qryConsult.Scan(&payment.PaymentInfo.PaymentID, &payment.Client.Id, &payment.Buyer.Name, &payment.Buyer.Email, &payment.Buyer.Cpf,
+			&payment.PaymentInfo.Amount, &payment.PaymentInfo.Card.HolderName, &payment.PaymentInfo.Card.Number, &payment.PaymentInfo.Card.ExpirationDate,
+			&payment.PaymentInfo.PaymentType, &payment.PaymentInfo.PaymentState, &payment.PaymentInfo.Boleto.Number)
 		if err != nil {
-			panic(err.Error())
+			return payments, err
 		}
-		clients = append(clients, client)
+		payments = append(payments, payment)
 	}
 
 	defer db.Close()
-	return clients
+	return payments, nil
 
-}*/
+}

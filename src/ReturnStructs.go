@@ -1,10 +1,14 @@
 package main
 
-/*
 import (
+	"database/sql"
 	//"fmt"
-	"time"
-)*/
+	//"time"
+)
+
+type NullString struct {
+	sql.NullString
+}
 
 type Person struct {
 	Id    int64  `json:"id,omitempty""`

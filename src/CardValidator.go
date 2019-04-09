@@ -7,13 +7,14 @@ import (
 type Brand int
 
 const (
-	Amex      Brand = 0
-	Diners    Brand = 1
-	Elo       Brand = 2
-	Hipercard Brand = 3
-	Hiper     Brand = 4
-	Master    Brand = 5
-	Visa      Brand = 6
+	Unknown   Brand = 0
+	Amex      Brand = 1
+	Diners    Brand = 2
+	Elo       Brand = 3
+	Hipercard Brand = 4
+	Hiper     Brand = 5
+	Master    Brand = 6
+	Visa      Brand = 7
 )
 
 func ValidCreditCard(cardNumber string) bool {
@@ -22,12 +23,12 @@ func ValidCreditCard(cardNumber string) bool {
 }
 
 func AmexBrand(cardNumber string) bool {
-	match, _ := regexp.MatchString("3(7|4)[0-9]{13}", cardNumber)
+	match, _ := regexp.MatchString("^3[47]\\d{13}$", cardNumber)
 	return match
 }
 
 func DinersBrand(cardNumber string) bool {
-	match, _ := regexp.MatchString("3[0-9]{13}", cardNumber)
+	match, _ := regexp.MatchString("^3(0[0-5]|[68]\\d)\\d{11}$", cardNumber)
 	return match
 }
 
@@ -37,9 +38,10 @@ func EloBrand(cardNumber string) bool {
 }
 
 func HipercardBrand(cardNumber string) bool {
-	match, _ := regexp.MatchString("^606282[0-9]{10}$", cardNumber)
+	var match bool
+	match, _ = regexp.MatchString("^606282[0-9]{10}$", cardNumber)
 	if !match {
-		regexp.MatchString("^3841(0|4|6)0[0-9]{13}$", cardNumber)
+		match, _ = regexp.MatchString("^3841(0|4|6)0[0-9]{13}$", cardNumber)
 	}
 	return match
 }
@@ -57,4 +59,29 @@ func MasterBrand(cardNumber string) bool {
 func VisaBrand(cardNumber string) bool {
 	match, _ := regexp.MatchString("4[0-9]{15}", cardNumber)
 	return match
+}
+
+func GetBrand(cardNumber string) Brand {
+	if AmexBrand(cardNumber) {
+		return Amex
+	}
+	if DinersBrand(cardNumber) {
+		return Diners
+	}
+	if EloBrand(cardNumber) {
+		return Elo
+	}
+	if HipercardBrand(cardNumber) {
+		return Hipercard
+	}
+	if HiperBrand(cardNumber) {
+		return Hiper
+	}
+	if MasterBrand(cardNumber) {
+		return Master
+	}
+	if VisaBrand(cardNumber) {
+		return Visa
+	}
+	return Unknown
 }

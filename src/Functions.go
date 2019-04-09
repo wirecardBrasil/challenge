@@ -1,10 +1,9 @@
 package main
 
-/*
 import (
-	"strconv"
+	//"strconv"
+	"regexp"
 )
-*/
 
 func ValidCardInfo(cardInfos CardInfos) (bool, string) {
 	var msg string
@@ -155,11 +154,6 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 	payReturn.Return.State = 1
 	payReturn.Return.Message = "Payment processed successfully."
 	return payReturn
-
-}
-
-func hello() string {
-	return "Welcome!"
 
 }
 

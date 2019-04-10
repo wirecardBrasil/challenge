@@ -1,14 +1,12 @@
 package main
 
+/*
 import (
 	"database/sql"
 	//"fmt"
 	//"time"
 )
-
-type NullString struct {
-	sql.NullString
-}
+*/
 
 type Person struct {
 	Id    int64  `json:"id,omitempty""`
@@ -89,4 +87,9 @@ type Payments []Payment
 type PaymentConsult struct {
 	Return   ReturnStruct `json:"return,omitempty"`
 	Payments Payments     `json:"payments,omitempty"`
+}
+
+type BrandData struct {
+	Code Brand  `json:"code,omitempty"`
+	Name string `json:"name,omitempty"`
 }

@@ -56,4 +56,16 @@ var routes = Routes{
 		"/payment/{idpayment}",
 		ConsultPaymentById,
 	},
+	Route{
+		"Card",
+		"GET",
+		"/card/validate/{cardnumber}",
+		ValidateCard,
+	},
+	Route{
+		"Card",
+		"GET",
+		"/card/brand/{cardnumber}",
+		ConsultCardBrand,
+	},
 }

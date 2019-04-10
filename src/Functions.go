@@ -1,9 +1,11 @@
 package main
 
+/*
 import (
 	//"strconv"
 	"regexp"
 )
+*/
 
 func ValidCardInfo(cardInfos CardInfos) (bool, string) {
 	var msg string
@@ -21,6 +23,11 @@ func ValidCardInfo(cardInfos CardInfos) (bool, string) {
 	}
 	if cardInfos.Cvv == "" {
 		msg = "CVV should be especified."
+		return false, msg
+	}
+
+	if !ValidCreditCard(cardInfos.Number) {
+		msg = "The card number isn't valid."
 		return false, msg
 	}
 
@@ -131,9 +138,10 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 
 	} else {
 		if payInfo.PaymentInfo.PaymentType == 2 {
+			//ValidCreditCard
 			if ok, msg := ValidCardInfo(payInfo.PaymentInfo.Card); !ok {
 				payReturn.Return.State = 0
-				payReturn.Return.Message = "Chek you card data. " + msg
+				payReturn.Return.Message = "Check you card data. " + msg
 				payReturn.Return.TechnicalMessage = "Invalid card data."
 				return payReturn
 			}
@@ -194,4 +202,52 @@ func ConsultPaymentID(idPayment int64) PaymentConsult {
 	retPayment.Payments = payments
 	return retPayment
 
+}
+
+func ValidCardNumber(cardNumber string) bool {
+	return ValidCreditCard(cardNumber)
+}
+
+func GetCarBrand(cardNumber string) BrandData {
+	brand := GetBrand(cardNumber)
+	var brandReturn BrandData
+	if brand == Amex {
+		brandReturn.Code = Amex
+		brandReturn.Name = "Amex"
+		return brandReturn
+	}
+	if brand == Diners {
+		brandReturn.Code = Diners
+		brandReturn.Name = "Diners"
+		return brandReturn
+	}
+	if brand == Elo {
+		brandReturn.Code = Elo
+		brandReturn.Name = "Elo"
+		return brandReturn
+	}
+	if brand == Hipercard {
+		brandReturn.Code = Hipercard
+		brandReturn.Name = "Hipercard"
+		return brandReturn
+	}
+	if brand == Hiper {
+		brandReturn.Code = Hiper
+		brandReturn.Name = "Hiper"
+		return brandReturn
+	}
+	if brand == Master {
+		brandReturn.Code = Master
+		brandReturn.Name = "Master"
+		return brandReturn
+	}
+	if brand == Visa {
+		brandReturn.Code = Visa
+		brandReturn.Name = "Visa"
+		return brandReturn
+	}
+
+	brandReturn.Code = Unknown
+	brandReturn.Name = "Unknown"
+	return brandReturn
 }

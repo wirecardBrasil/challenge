@@ -172,3 +172,37 @@ func ConsultPaymentById(w http.ResponseWriter, r *http.Request) {
 
 	formatJsonReturn(w, http.StatusOK, payments)
 }
+
+func ValidateCard(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	vars := mux.Vars(r)
+	cardNumber := vars["cardnumber"] //strconv.ParseInt(vars["cardnumber"], 10, 64)
+	/*
+		if err != nil {
+			formatErrorResponse(w, 422, 422, "Card number to be validated not found.", err.Error())
+			return
+		}*/
+
+	var cardReturn CardReturn
+	cardReturn.Successful = ValidCardNumber(cardNumber)
+
+	formatJsonReturn(w, http.StatusOK, cardReturn)
+
+}
+
+func ConsultCardBrand(w http.ResponseWriter, r *http.Request) {
+	//func GetCarBrand(cardNumber string) BrandData
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	vars := mux.Vars(r)
+	cardNumber := vars["cardnumber"] //strconv.ParseInt(vars["cardnumber"], 10, 64)
+	/*
+		if err != nil {
+			formatErrorResponse(w, 422, 422, "Card number to be validated not found.", err.Error())
+			return
+		}
+	*/
+
+	brand := GetCarBrand(cardNumber)
+
+	formatJsonReturn(w, http.StatusOK, brand)
+}

@@ -6,6 +6,17 @@ import (
 	"regexp"
 )
 */
+func FInsertClient(client Client) (Client, error, CustomError) {
+	return InsertClientBD(client)
+}
+
+func ConsultClients() Clients {
+	return ConsultAllClientsDB()
+}
+
+func ConsultEspecificClient(id int64) Clients {
+	return ConsultClientDB(id)
+}
 
 func ValidCardInfo(cardInfos CardInfos) (bool, string) {
 	var msg string

@@ -69,7 +69,7 @@ func InsertClient(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var retClients Clients
-	retClient, err, customError := InsertClientBD(client)
+	retClient, err, customError := FInsertClient(client)
 	if err != nil {
 		//avoid empty technical message
 		tmessage := customError.TechnicalMessage
@@ -87,7 +87,7 @@ func InsertClient(w http.ResponseWriter, r *http.Request) {
 
 func ConsultAllClients(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	formatJsonReturn(w, http.StatusOK, FormatClientConsult(ConsultAllClientsDB(), 1, ""))
+	formatJsonReturn(w, http.StatusOK, FormatClientConsult(ConsultClients(), 1, ""))
 }
 
 func ConsultClient(w http.ResponseWriter, r *http.Request) {
@@ -101,7 +101,7 @@ func ConsultClient(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	formatJsonReturn(w, http.StatusOK, FormatClientConsult(ConsultClientDB(id), 1, ""))
+	formatJsonReturn(w, http.StatusOK, FormatClientConsult(ConsultEspecificClient(id), 1, ""))
 }
 
 func DoPayment(w http.ResponseWriter, r *http.Request) {

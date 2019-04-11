@@ -14,7 +14,7 @@ It uses Golang as programming language and MySQL as database.
 - GET /card/brand/:cardnumber
 
 ###  POST /client
-Method is intented to insert a new client.
+Method is intended to insert a new client.
 
 >URL: http://localhost:8080/client
 
@@ -53,7 +53,7 @@ Where,
 
 ****
 ###  GET /client
-Method is intented to return all clients.
+Method is intended to return all clients.
 
 >URL: http://localhost:8080/client
 
@@ -83,7 +83,7 @@ Where,
 
 ****
 ###  GET /client/:idclient
-Method is intented to return an especific client.
+Method is intended to return an especific client.
 
 >URL:http://localhost:8080/client/:idclient
 
@@ -120,7 +120,7 @@ Where,
 
 ****
 ###  POST /payment
-Method is intented to create new payment.
+Method is intended to create new payment.
 
 >URL: http://localhost:8080/payment
 
@@ -197,7 +197,7 @@ Where,
 
 ****
 ###  PUT /payment/:idpayment/state/:idstate
-Method is intented to update payment's state.
+Method is intended to update payment's state.
 
 >URL: http://localhost:8080/payment/:idpayment/state/:idstate
 
@@ -225,7 +225,7 @@ Where,
 
 ****
 ###  GET /payment/:idpayment
-Method is intented consult an especific payment
+Method is intended consult an especific payment
 
 >URL: http://localhost:8080/payment/:idpayment
 
@@ -287,13 +287,13 @@ Where,
 
 *Notes:*  
 *-card infos should only send when payment type was 2 (credit card).*  
-*-For safe issues, the card number only returns for last digits and the method doesn   't returns cvv.*  
+*-For safety purpose, the card number only returns for last digits and the method doesn   't returns cvv.*  
 *-boleto infos should only send when payment type was 1 (boleto).*  
 
 
 ****
 ###  GET /card/validate/:cardnumber
-Method is intented to check if card number is valid.
+Method is intended to check if card number is valid.
 
 >URL: http://localhost:8080/card/validate/:cardnumber
 
@@ -316,7 +316,7 @@ Where,
 
 ****
 ###  GET /card/brand/:cardnumber
-Method is intented to return de card's brand
+Method is intended to return de card's brand
 
 >URL: http://localhost:8080/card/brand/:cardnumber
 

@@ -18,7 +18,7 @@ Method is intented to insert a new client.
 
 >URL: http://localhost:8080/client
 
-**Header:**
+**Header:**  
 "Content-Type": "application/json"
 
 **Body:**
@@ -29,10 +29,10 @@ Method is intented to insert a new client.
     "cpfCnpj": "999999999"
 }
 ```
-Where,
-**name** -> Client's name.
-**email** -> Client's email.
-**cpfCnpj** -> Client's CPF or CNPJ
+Where,  
+**name** -> Client's name.  
+**email** -> Client's email.  
+**cpfCnpj** -> Client's CPF or CNPJ  
 
 **Return**
 ```
@@ -45,11 +45,11 @@ Where,
     }
 ]
 ```
-Where,
-**id** -> Id of inserted client.
-**name** -> Client's name.
-**email** -> Client's email.
-**cpfCnpj** -> Client's CPF or CNPJ
+Where,  
+**id** -> Id of inserted client.  
+**name** -> Client's name.  
+**email** -> Client's email.  
+**cpfCnpj** -> Client's CPF or CNPJ  
 
 ****
 ###  GET /client
@@ -74,12 +74,12 @@ Method is intented to return all clients.
 }
 ```
 
-Where,
-**state** -> State of return. 0 = false, 1 = true.
-**id** -> Client's id.
-**name** -> Client's name.
-**email** -> Client's email.
-**cpfCnpj** -> Client's CPF or CNPJ
+Where,  
+**state** -> State of return. 0 = false, 1 = true.  
+**id** -> Client's id.  
+**name** -> Client's name.  
+**email** -> Client's email.  
+**cpfCnpj** -> Client's CPF or CNPJ  
 
 ****
 ###  GET /client/:idclient
@@ -87,8 +87,8 @@ Method is intented to return an especific client.
 
 >URL:http://localhost:8080/client/:idclient
 
-Where,
-**:idclient** -> Is the client's id to be consulted.
+Where,  
+**:idclient** -> Is the client's id to be consulted.  
 
 Example:
 >http://localhost:8080/client/10
@@ -111,12 +111,12 @@ This will return the informations of client with id 10.
 }
 ```
 
-Where,
-**state** -> State to indicates success of opperaion. 0 = false, 1 = true.
-**id** -> Client's id.
-**name** -> Client's name.
-**email** -> Client's email.
-**cpfCnpj** -> Client's CPF or CNPJ
+Where,  
+**state** -> State to indicates success of opperaion. 0 = false, 1 = true.  
+**id** -> Client's id.  
+**name** -> Client's name.  
+**email** -> Client's email.  
+**cpfCnpj** -> Client's CPF or CNPJ  
 
 ****
 ###  POST /payment
@@ -124,7 +124,7 @@ Method is intented to create new payment.
 
 >URL: http://localhost:8080/payment
 
-**Header**
+**Header**  
 "Content-Type": "application/json"
 
 **Body**
@@ -150,18 +150,18 @@ Method is intented to create new payment.
 	}
 }
 ```
-Where,
-**client.id** -> Client's id.
-**buyer.name** -> Buyer's name.
-**buyer.email** -> Buyer's email.
-**buyer.cpfCnpj** -> Buyer's CPF or CNPJ.
-**payment.amount** -> Payment's amount.
-**payment.type** -> Type of payment. 1 = boleto, 2 = credit card.
-**card.holderName** -> Name of card holder.
-**card.number** -> Card's number.
-**card.expirationDate** -> Card's expiration date.
-**card.cvv** -> Card's verification value.
-*Note: card infos should only send when payment type was 2 (credit card).*
+Where,  
+**client.id** -> Client's id.  
+**buyer.name** -> Buyer's name.  
+**buyer.email** -> Buyer's email.  
+**buyer.cpfCnpj** -> Buyer's CPF or CNPJ.  
+**payment.amount** -> Payment's amount.  
+**payment.type** -> Type of payment. 1 = boleto, 2 = credit card.  
+**card.holderName** -> Name of card holder.  
+**card.number** -> Card's number.  
+**card.expirationDate** -> Card's expiration date.  
+**card.cvv** -> Card's verification value.  
+*Note: card infos should only send when payment type was 2 (credit card).*  
 
 **Return**
 ```
@@ -184,16 +184,16 @@ Where,
 
 ```
 
-**state** -> State to indicates success of opperaion. 0 = false, 1 = true.
-**message** -> Message of opperation.
-**payment.paymentId** -> Payment's id.
-**payment.paymentState** -> Payment's state. 1 - "Pending", 2 - "Paid", 3 - "Canceled", 4 - "Refused".
-**card.successful** -> Informs if card's payment was successful or not. Returning true or false, respectively.
-**boleto.number** -> Returns the boleto's number to payment.
+**state** -> State to indicates success of opperaion. 0 = false, 1 = true.  
+**message** -> Message of opperation.  
+**payment.paymentId** -> Payment's id.  
+**payment.paymentState** -> Payment's state. 1 - "Pending", 2 - "Paid", 3 - "Canceled", 4 - "Refused".  
+**card.successful** -> Informs if card's payment was successful or not. Returning true or false, respectively.  
+**boleto.number** -> Returns the boleto's number to payment.  
 
-*Notes:*
-- *card.successful is only returned when is a card payment (type 2).*
-- *boleto.number is only returned when is a boleto payment (type 1).*
+*Notes:*  
+- *card.successful is only returned when is a card payment (type 2).*  
+- *boleto.number is only returned when is a boleto payment (type 1).*  
 
 ****
 ###  PUT /payment/:idpayment/state/:idstate
@@ -201,9 +201,9 @@ Method is intented to update payment's state.
 
 >URL: http://localhost:8080/payment/:idpayment/state/:idstate
 
-Where,
-**:idpayment** -> Payment's id.
-**:idstate** -> State that will be associated to payment. 1 - "Pending", 2 - "Paid", 3 - "Canceled", 4 - "Refused".
+Where,  
+**:idpayment** -> Payment's id.  
+**:idstate** -> State that will be associated to payment. 1 - "Pending", 2 - "Paid", 3 - "Canceled", 4 - "Refused".  
 
 Example:
 >http://localhost:8080/payment/10/state/2
@@ -218,10 +218,10 @@ This will alter the state of payment 10 to "Paid".
 }
 ```
 
-Where, 
-**state** -> State to indicates success of opperaion. 0 = false, 1 = true.
-**message** -> Opperation's message.
-**technicalMessage** -> Technical message, describes detailed erros if occurs.
+Where,   
+**state** -> State to indicates success of opperaion. 0 = false, 1 = true.  
+**message** -> Opperation's message.  
+**technicalMessage** -> Technical message, describes detailed erros if occurs.  
 
 ****
 ###  GET /payment/:idpayment
@@ -229,8 +229,8 @@ Method is intented consult an especific payment
 
 >URL: http://localhost:8080/payment/:idpayment
 
-Where,
-**:idpayment** -> Payment's id to be consulted.
+Where,  
+**:idpayment** -> Payment's id to be consulted.  
 
 Example:
 >http://localhost:8080/payment/10
@@ -270,25 +270,25 @@ This will return infos fo payment 10.
     ]
 }
 ```
-Where, 
-**state** -> State to indicates success of opperaion. 0 = false, 1 = true.
-**client.id** -> Client's id.
-**buyer.name** -> Buyer's name.
-**buyer.email** -> Buyer's email.
-**buyer.cpfCnpj** -> Buyer's CPF or CNPJ.
-**payment.paymentId** -> Payment's id.
-**payment.amount** -> Payment's amount.
-**payment.type** -> Type of payment. 1 = boleto, 2 = credit card.
-**card.holderName** -> Name of card holder.
-**card.number** -> Card final number.Only returns last 4 digits.
-**card.expirationDate** -> Card's expiration date.
-**boleto.number** -> Boleto's number.
-**payment.paymentState** -> Payment's state. 1 - "Pending", 2 - "Paid", 3 - "Canceled", 4 - "Refused".
+Where,   
+**state** -> State to indicates success of opperaion. 0 = false, 1 = true.  
+**client.id** -> Client's id.  
+**buyer.name** -> Buyer's name.  
+**buyer.email** -> Buyer's email.  
+**buyer.cpfCnpj** -> Buyer's CPF or CNPJ.  
+**payment.paymentId** -> Payment's id.  
+**payment.amount** -> Payment's amount.  
+**payment.type** -> Type of payment. 1 = boleto, 2 = credit card.  
+**card.holderName** -> Name of card holder.  
+**card.number** -> Card final number.Only returns last 4 digits.  
+**card.expirationDate** -> Card's expiration date.  
+**boleto.number** -> Boleto's number.  
+**payment.paymentState** -> Payment's state. 1 - "Pending", 2 - "Paid", 3 - "Canceled", 4 - "Refused".  
 
-*Notes:*
-*-card infos should only send when payment type was 2 (credit card).*
-*-For safe issues, the card number only returns for last digits and the method doesn   't returns cvv.*
-*-boleto infos should only send when payment type was 1 (boleto).*
+*Notes:*  
+*-card infos should only send when payment type was 2 (credit card).*  
+*-For safe issues, the card number only returns for last digits and the method doesn   't returns cvv.*  
+*-boleto infos should only send when payment type was 1 (boleto).*  
 
 
 ****
@@ -297,8 +297,8 @@ Method is intented to check if card number is valid.
 
 >URL: http://localhost:8080/card/validate/:cardnumber
 
-Where,
-**:cardnumber** -> Card's number.
+Where,  
+**:cardnumber** -> Card's number.  
 
 Example:
 >http://localhost:8080/card/validate/9999999999999
@@ -311,8 +311,8 @@ This will return if card's number "9999999999999" is a valid one .
 }
 ```
 
-Where,
-**successful** -> Indicates it's a valid card number. Returns true or false.
+Where,  
+**successful** -> Indicates it's a valid card number. Returns true or false.  
 
 ****
 ###  GET /card/brand/:cardnumber
@@ -320,8 +320,8 @@ Method is intented to return de card's brand
 
 >URL: http://localhost:8080/card/brand/:cardnumber
 
-Where,
-**:cardnumber** -> Card's number.
+Where,  
+**:cardnumber** -> Card's number.  
 
 Example:
 >http://localhost:8080/card/brand/9999999999999
@@ -335,7 +335,7 @@ This will return the card's brand with number "9999999999999".
 }
 ```
 
-Where,
-**code** -> Brand code. *Brands supported: 1 - Amex, 2 - Diners, 3 - Elo, 4 - Hipercard, 5 - Hiper, 6 - Master, 7 - Visa*
-**name** -> Brand name.
+Where,  
+**code** -> Brand code. *Brands supported: 1 - Amex, 2 - Diners, 3 - Elo, 4 - Hipercard, 5 - Hiper, 6 - Master, 7 - Visa*  
+**name** -> Brand name.  
 

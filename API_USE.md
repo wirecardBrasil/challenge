@@ -294,7 +294,7 @@ Where,
 
 *Notes:*  
 *-card infos should only send when payment type was 2 (credit card).*  
-*-For safety purpose, the card number only returns for last digits and the method doesn   't returns cvv.*  
+*-For safety purpose, the card number only returns four last digits and the method doesn   't returns cvv.*  
 *-boleto infos should only send when payment type was 1 (boleto).*  
 
 

@@ -91,7 +91,7 @@ Where,
 **:idclient** -> Is the client's id to be consulted.  
 
 Example:
->http://localhost:8080/client/10
+>http://localhost:8080/client/10  
 This will return the informations of client with id 10.
 
 **Return**
@@ -206,7 +206,7 @@ Where,
 **:idstate** -> State that will be associated to payment. 1 - "Pending", 2 - "Paid", 3 - "Canceled", 4 - "Refused".  
 
 Example:
->http://localhost:8080/payment/10/state/2
+>http://localhost:8080/payment/10/state/2  
 This will alter the state of payment 10 to "Paid".
 
 **Return**
@@ -233,7 +233,7 @@ Where,
 **:idpayment** -> Payment's id to be consulted.  
 
 Example:
->http://localhost:8080/payment/10
+>http://localhost:8080/payment/10  
 This will return infos fo payment 10.
 
 **Return**
@@ -301,7 +301,7 @@ Where,
 **:cardnumber** -> Card's number.  
 
 Example:
->http://localhost:8080/card/validate/9999999999999
+>http://localhost:8080/card/validate/9999999999999  
 This will return if card's number "9999999999999" is a valid one .
 
 **Return**
@@ -324,7 +324,7 @@ Where,
 **:cardnumber** -> Card's number.  
 
 Example:
->http://localhost:8080/card/brand/9999999999999
+>http://localhost:8080/card/brand/9999999999999  
 This will return the card's brand with number "9999999999999".
 
 **Returns**

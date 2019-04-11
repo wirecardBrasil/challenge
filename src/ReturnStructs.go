@@ -65,7 +65,7 @@ type BoletoReturn struct {
 }
 
 type CardReturn struct {
-	Successful bool `json:"successful,omitempty"`
+	Successful bool `json:"successful"`
 }
 
 type PaymentDataReturn struct {

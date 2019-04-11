@@ -63,8 +63,8 @@ func InsertClient(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if (client.Name == "") && (client.Cpf == "") && (client.Email == "") {
-		formatErrorResponse(w, 500, 500, "You should inform name, cpf or email to save client.", "")
+	if (client.Name == "") || (client.CpfCnpj == "") || (client.Email == "") {
+		formatErrorResponse(w, 500, 500, "You should inform name, cpfCnpj or email to save client.", "")
 		return
 	}
 

@@ -9,10 +9,10 @@ import (
 */
 
 type Person struct {
-	Id    int64  `json:"id,omitempty""`
-	Name  string `json:"name,omitempty"`
-	Email string `json:"email,omitempty"`
-	Cpf   string `json:"cpf,omitempty"`
+	Id      int64  `json:"id,omitempty"`
+	Name    string `json:"name,omitempty"`
+	Email   string `json:"email,omitempty"`
+	CpfCnpj string `json:"cpfCnpj,omitempty"`
 }
 
 type Client Person

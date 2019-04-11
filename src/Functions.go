@@ -91,8 +91,8 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 	var retBuyer = Buyer{}
 	//var customError = CustomError{}
 	//Check if buyer exists. If doesn't exists, save
-	if BuyerRegistered(payInfo.Buyer.Cpf) {
-		localRetBuyer, err := BuyerInfo(payInfo.Buyer.Cpf)
+	if BuyerRegistered(payInfo.Buyer.CpfCnpj) {
+		localRetBuyer, err := BuyerInfo(payInfo.Buyer.CpfCnpj)
 
 		if err != nil {
 			payReturn.Return.State = 0
@@ -103,7 +103,6 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 		retBuyer = localRetBuyer
 	} else {
 
-		//panic("RET3 " + strconv.FormatInt(retBuyer.Id, 10))
 		localRetBuyer, err, customError := SaveBuyer(payInfo.Buyer)
 		if err != nil {
 			//avoid empty technical message
@@ -119,11 +118,7 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 		retBuyer = localRetBuyer
 	}
 
-	//panic("RET4 " + strconv.FormatInt(retBuyer.Id, 10))
-
-	//panic("RET2 " + strconv.FormatInt(retBuyer.Id, 10))
 	payInfo.Buyer = retBuyer
-	//panic("ALO" + payInfo.Buyer.Cpf + " = " + retBuyer.Cpf)
 	//Save general payment info
 	payInfo, err := SavePayment(payInfo)
 	if err != nil {

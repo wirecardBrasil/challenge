@@ -46,7 +46,7 @@ func InsertClientBD(client Client) (Client, error, CustomError) {
 			"	?, "+
 			"	?, "+
 			"	? "+
-			") ", client.Name, client.Email, client.Cpf)
+			") ", client.Name, client.Email, client.CpfCnpj)
 	if err != nil {
 		if driverErr, ok := err.(*mysql.MySQLError); ok { // Now the error number is accessible directly
 			//1062 = SQL code to duplicated key.
@@ -83,7 +83,7 @@ func InsertClientBD(client Client) (Client, error, CustomError) {
 	clientReturn.Id = id
 	clientReturn.Name = client.Name
 	clientReturn.Email = client.Email
-	clientReturn.Cpf = client.Cpf
+	clientReturn.CpfCnpj = client.CpfCnpj
 
 	defer db.Close()
 	return clientReturn, nil, cError
@@ -107,7 +107,7 @@ func ConsultAllClientsDB() Clients {
 	client := Client{}
 	clients := []Client{}
 	for qryConsult.Next() {
-		err = qryConsult.Scan(&client.Id, &client.Name, &client.Email, &client.Cpf)
+		err = qryConsult.Scan(&client.Id, &client.Name, &client.Email, &client.CpfCnpj)
 		if err != nil {
 			panic(err.Error())
 		}
@@ -137,7 +137,7 @@ func ConsultClientDB(id int64) Clients {
 	}
 
 	for qryConsult.Next() {
-		err = qryConsult.Scan(&client.Id, &client.Name, &client.Email, &client.Cpf)
+		err = qryConsult.Scan(&client.Id, &client.Name, &client.Email, &client.CpfCnpj)
 		if err != nil {
 			panic(err.Error())
 		}
@@ -203,7 +203,7 @@ func BuyerInfo(cpfCnpj string) (Buyer, error) {
 		"	cpfCnpj = ? "+
 		"ORDER BY "+
 		"	id desc "+
-		"LIMIT 1 ", cpfCnpj).Scan(&buyer.Id, &buyer.Name, &buyer.Email, &buyer.Cpf)
+		"LIMIT 1 ", cpfCnpj).Scan(&buyer.Id, &buyer.Name, &buyer.Email, &buyer.CpfCnpj)
 	if err != nil {
 		return buyer, err
 	}
@@ -228,7 +228,7 @@ func SaveBuyer(buyer Buyer) (Buyer, error, CustomError) {
 			"	?, "+
 			"	?, "+
 			"	? "+
-			") ", buyer.Name, buyer.Email, buyer.Cpf)
+			") ", buyer.Name, buyer.Email, buyer.CpfCnpj)
 	if err != nil {
 		if driverErr, ok := err.(*mysql.MySQLError); ok { // Now the error number is accessible directly
 			//1062 = SQL code to duplicated key.
@@ -265,7 +265,7 @@ func SaveBuyer(buyer Buyer) (Buyer, error, CustomError) {
 	buyerReturn.Id = id
 	buyerReturn.Name = buyer.Name
 	buyerReturn.Email = buyer.Email
-	buyerReturn.Cpf = buyer.Cpf
+	buyerReturn.CpfCnpj = buyer.CpfCnpj
 
 	defer db.Close()
 	return buyerReturn, nil, cError
@@ -394,7 +394,7 @@ func AlterPaymentStateDB(idPayment int64, idState int) (bool, string) {
 
 func PaymentConsultReturn(rows *rows) PaymentConsult {
 	for rows.Next() {
-		err = rows.Scan(&client.Id, &client.Name, &client.Email, &client.Cpf)
+		err = rows.Scan(&client.Id, &client.Name, &client.Email, &client.CpfCnpj)
 		if err != nil {
 			panic(err.Error())
 		}
@@ -413,7 +413,7 @@ func ConsultPaymentByIdBD(idPayment int64) (Payments, error) {
 		"    payment.idClient, "+
 		"    regBuyer.buyerName, "+
 		"    regBuyer.email, "+
-		"    regBuyer.cpfCnpj, "+
+		"    regBuyer.CpfCnpj, "+
 		"    payment.amount, "+
 		"	 IFNULL(cardPayment.holderName, '') as holderName, "+
 		"	 IFNULL(cardPayment.cardFinalNumber, '') as cardFinalNumber, "+
@@ -436,7 +436,7 @@ func ConsultPaymentByIdBD(idPayment int64) (Payments, error) {
 	}
 
 	for qryConsult.Next() {
-		err = qryConsult.Scan(&payment.PaymentInfo.PaymentID, &payment.Client.Id, &payment.Buyer.Name, &payment.Buyer.Email, &payment.Buyer.Cpf,
+		err = qryConsult.Scan(&payment.PaymentInfo.PaymentID, &payment.Client.Id, &payment.Buyer.Name, &payment.Buyer.Email, &payment.Buyer.CpfCnpj,
 			&payment.PaymentInfo.Amount, &payment.PaymentInfo.Card.HolderName, &payment.PaymentInfo.Card.Number, &payment.PaymentInfo.Card.ExpirationDate,
 			&payment.PaymentInfo.PaymentType, &payment.PaymentInfo.PaymentState, &payment.PaymentInfo.Boleto.Number)
 		if err != nil {

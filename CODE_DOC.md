@@ -15,7 +15,7 @@ I've created an unit test to cases with static return.
 ## Create and preparing database
 1. Create database, tables and columns using file "CREATE.SQL" (on folder ...\challenge\scripts).  
 2. Run the initial inserts using file "INSERT.SQL" (on folder ...\challenge\scripts).  
-3. Open de file "config.json" and configure it to your database (on folder ...\challenge\src\config).  
+3. Open de file "config.json" and configure it to your database (on folder ...\challenge\src\config), setting database name ("database.namedb"), user ("database.user") and password ("database.password").  
 
 ## How do I run the program?
 1. Open CMD and open the folder where are the project (...\challenge\src).  

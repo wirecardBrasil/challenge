@@ -75,7 +75,8 @@ Method is intended to return all clients.
 ```
 
 Where,  
-**state** -> State of return. 0 = false, 1 = true.  
+**state** -> State of return.  
+	1 - Return without errors, 1062 - Client already inserted, 500 - Parser error, 422 - Invalid json, 5001 - Invalid payment type, 5002 - Amount not informed, 5003 - Client id not informed, 5004 - Buyer's name not informed, 5005 - Buyer's email not informed, 5006 - Buyer's cpf/cpj not informed, 0 - Other erros.  
 **id** -> Client's id.  
 **name** -> Client's name.  
 **email** -> Client's email.  
@@ -112,7 +113,8 @@ This will return the informations of client with id 10.
 ```
 
 Where,  
-**state** -> State to indicates success of opperaion. 0 = false, 1 = true.  
+**state** -> State of return.  
+	1 - Return without errors, 1062 - Client already inserted, 500 - Parser error, 422 - Invalid json, 5001 - Invalid payment type, 5002 - Amount not informed, 5003 - Client id not informed, 5004 - Buyer's name not informed, 5005 - Buyer's email not informed, 5006 - Buyer's cpf/cpj not informed, 0 - Other erros.  
 **id** -> Client's id.  
 **name** -> Client's name.  
 **email** -> Client's email.  
@@ -184,12 +186,13 @@ Where,
 
 ```
 
-**state** -> State to indicates success of opperaion. 0 = false, 1 = true.  
+**state** -> State of return.  
+	1 - Return without errors, 1062 - Client already inserted, 500 - Parser error, 422 - Invalid json, 5001 - Invalid payment type, 5002 - Amount not informed, 5003 - Client id not informed, 5004 - Buyer's name not informed, 5005 - Buyer's email not informed, 5006 - Buyer's cpf/cpj not informed, 0 - Other erros.  
 **message** -> Message of opperation.  
 **payment.paymentId** -> Payment's id.  
 **payment.paymentState** -> Payment's state. 1 - "Pending", 2 - "Paid", 3 - "Canceled", 4 - "Refused".  
-**card.successful** -> Informs if card's payment was successful or not. Returning true or false, respectively.  
-**boleto.number** -> Returns the boleto's number to payment.  
+**card.successful** -> Informs if card's payment was successful or not. Returning true or false, respectively. Check only when is credit card payment.  
+**boleto.number** -> Returns the boleto's number to payment. Check only when is boleto payment.  
 
 *Notes:*  
 - *card.successful is only returned when is a card payment (type 2).*  
@@ -219,7 +222,8 @@ This will alter the state of payment 10 to "Paid".
 ```
 
 Where,   
-**state** -> State to indicates success of opperaion. 0 = false, 1 = true.  
+**state** -> State of return.  
+	1 - Return without errors, 1062 - Client already inserted, 500 - Parser error, 422 - Invalid json, 5001 - Invalid payment type, 5002 - Amount not informed, 5003 - Client id not informed, 5004 - Buyer's name not informed, 5005 - Buyer's email not informed, 5006 - Buyer's cpf/cpj not informed, 0 - Other erros.  
 **message** -> Opperation's message.  
 **technicalMessage** -> Technical message, describes detailed erros if occurs.  
 
@@ -240,7 +244,8 @@ This will return infos fo payment 10.
 ```
 {
     "return": {
-        "state": 9
+        "state": 9,
+        "message":"string"
     },
     "payments": [
         {
@@ -271,7 +276,9 @@ This will return infos fo payment 10.
 }
 ```
 Where,   
-**state** -> State to indicates success of opperaion. 0 = false, 1 = true.  
+**state** -> State of return.  
+	1 - Return without errors, 1062 - Client already inserted, 500 - Parser error, 422 - Invalid json, 5001 - Invalid payment type, 5002 - Amount not informed, 5003 - Client id not informed, 5004 - Buyer's name not informed, 5005 - Buyer's email not informed, 5006 - Buyer's cpf/cpj not informed, 0 - Other erros.  
+**message** -> Error message, if it occurs. 
 **client.id** -> Client's id.  
 **buyer.name** -> Buyer's name.  
 **buyer.email** -> Buyer's email.  

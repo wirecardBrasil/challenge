@@ -80,7 +80,7 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 	var payReturn = PaymentReturn{}
 
 	//Validates general informations
-	if (payInfo.PaymentInfo.PaymentType != 1) && (payInfo.PaymentInfo.PaymentType != 1) {
+	if (payInfo.PaymentInfo.PaymentType != 1) && (payInfo.PaymentInfo.PaymentType != 2) {
 		payReturn.Return.State = 5001
 		payReturn.Return.Message = "Please, check payment type."
 		payReturn.Return.TechnicalMessage = "Invalid payment type."

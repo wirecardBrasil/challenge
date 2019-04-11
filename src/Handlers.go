@@ -124,10 +124,12 @@ func DoPayment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//var retPayment PaymentReturn
-
 	retPayment := PaymentMethod(payInfo)
-
-	formatJsonReturn(w, http.StatusCreated, retPayment)
+	if retPayment.Return.State != 1 {
+		formatJsonReturn(w, 500, retPayment)
+	} else {
+		formatJsonReturn(w, http.StatusCreated, retPayment)
+	}
 
 }
 

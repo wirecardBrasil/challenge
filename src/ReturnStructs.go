@@ -90,6 +90,6 @@ type PaymentConsult struct {
 }
 
 type BrandData struct {
-	Code Brand  `json:"code,omitempty"`
+	Code Brand  `json:"code"`
 	Name string `json:"name,omitempty"`
 }

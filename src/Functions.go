@@ -79,6 +79,44 @@ func PaymentMethod(payInfo2 Payment) PaymentReturn {
 	payInfo := payInfo2
 	var payReturn = PaymentReturn{}
 
+	//Validates general informations
+	if (payInfo.PaymentInfo.PaymentType != 1) && (payInfo.PaymentInfo.PaymentType != 1) {
+		payReturn.Return.State = 5001
+		payReturn.Return.Message = "Please, check payment type."
+		payReturn.Return.TechnicalMessage = "Invalid payment type."
+		return payReturn
+	}
+	if payInfo.PaymentInfo.Amount < 1 {
+		payReturn.Return.State = 5002
+		payReturn.Return.Message = "Please, inform amount of payment."
+		payReturn.Return.TechnicalMessage = "Amount not informed."
+		return payReturn
+	}
+	if payInfo.Client.Id < 1 {
+		payReturn.Return.State = 5003
+		payReturn.Return.Message = "Please, inform client."
+		payReturn.Return.TechnicalMessage = "Client not informed."
+		return payReturn
+	}
+	if payInfo.Buyer.Name == "" {
+		payReturn.Return.State = 5004
+		payReturn.Return.Message = "Please, inform buyer name."
+		payReturn.Return.TechnicalMessage = "Buyer name not informed."
+		return payReturn
+	}
+	if payInfo.Buyer.Email == "" {
+		payReturn.Return.State = 5005
+		payReturn.Return.Message = "Please, inform buyer e-mail."
+		payReturn.Return.TechnicalMessage = "Buyer e-mail not informed."
+		return payReturn
+	}
+	if payInfo.Buyer.CpfCnpj == "" {
+		payReturn.Return.State = 5006
+		payReturn.Return.Message = "Please, inform buyer CPF or CNPJ."
+		payReturn.Return.TechnicalMessage = "Buyer cpf/cnpj not informed."
+		return payReturn
+	}
+
 	//Check if client exists
 	if !(ClientRegistered(payInfo.Client.Id)) {
 		payReturn.Return.State = 0
@@ -204,6 +242,12 @@ func ConsultPaymentID(idPayment int64) PaymentConsult {
 		//formatErrorResponse(w, 422, 422, , )
 		//return
 	}
+	if len(payments) < 1 {
+		retPayment.Return.State = 0
+		retPayment.Return.Message = "Payment not found."
+		return retPayment
+	}
+
 	retPayment.Return.State = 1
 	retPayment.Payments = payments
 	return retPayment

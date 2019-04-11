@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "9d383119-a6af-4705-b76d-98a8550720b7",
+		"name": "challenge_wirecard",
+		"description": "Collection to simulate API consume to support payment methods.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				},
+				"description": "Index call to main page."
+			},
+			"response": []
+		},
+		{
+			"name": "/client",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"José Maria\",\n    \"email\": \"jose@test.com\",\n    \"cpfCnpj\": \"38793707885\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"client"
+					]
+				},
+				"description": "Method to include a new client."
+			},
+			"response": []
+		},
+		{
+			"name": "/client",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"client"
+					]
+				},
+				"description": "Method to consult all clients."
+			},
+			"response": []
+		},
+		{
+			"name": "/client/:idclient",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/client/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"client",
+						"1"
+					]
+				},
+				"description": "Method to consult an especific client."
+			},
+			"response": []
+		},
+		{
+			"name": "/paymentcard",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"client\":{\r\n\t\t\"id\": 1\r\n\t},\r\n\t\"buyer\":{\r\n\t\t\"name\": \"Joaquim Silva\",\r\n\t\t\"email\": \"joaquim@test.com\",\r\n\t\t\"cpfCnpj\": \"50272843067\"\t\r\n\t},\r\n\t\"payment\":{\r\n\t\t\"amount\":120.30,\r\n\t\t\"type\":2,\r\n\t\t\"card\":{\r\n\t\t\t\"holderName\":\"Joaquim Silva\",\r\n\t\t\t\"number\":\"53375768600920268\",\r\n\t\t\t\"expirationDate\":\"02/08\",\r\n\t\t\t\"cvv\":\"021\"\r\n\t\t}\r\n\t}\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/payment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"payment"
+					]
+				},
+				"description": "Method to create a new card payment."
+			},
+			"response": []
+		},
+		{
+			"name": "/paymentboleto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"client\":{\r\n\t\t\"id\": 1\r\n\t},\r\n\t\"buyer\":{\r\n\t\t\"name\": \"Joaquim Silva\",\r\n\t\t\"email\": \"joaquim@test.com\",\r\n\t\t\"cpfCnpj\": \"50272843067\"\t\r\n\t},\r\n\t\"payment\":{\r\n\t\t\"amount\":120.30,\r\n\t\t\"type\":1\r\n\t}\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/payment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"payment"
+					]
+				},
+				"description": "Method to create a new boleto payment."
+			},
+			"response": []
+		},
+		{
+			"name": "/payment/:idpayment/state/:idstate",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/payment/10/state/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"payment",
+						"10",
+						"state",
+						"1"
+					]
+				},
+				"description": "Method to update payment state."
+			},
+			"response": [
+				{
+					"name": "updatePaymentState_InvalidPayment",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/payment/100/state/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payment",
+								"100",
+								"state",
+								"2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 07 Apr 2019 17:49:12 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "132"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"state\": 0,\n    \"message\": \"We've couldn't altering payment state.\",\n    \"technicalMessage\": \"Couldn't update register. Check the payment id.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/payment/:idpayment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/payment/170",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"payment",
+						"170"
+					]
+				},
+				"description": "Method to consult an especific payment."
+			},
+			"response": []
+		},
+		{
+			"name": "/card/validate/:cardnumber",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/card/validate/4514160123456789",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card",
+						"validate",
+						"4514160123456789"
+					]
+				},
+				"description": "Method to check if card number is a valid one."
+			},
+			"response": []
+		},
+		{
+			"name": "/card/brand/:cardnumber",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/card/brand/4514160123456789",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card",
+						"brand",
+						"4514160123456789"
+					]
+				},
+				"description": "Method to consult card's brand."
+			},
+			"response": []
+		}
+	]
+}

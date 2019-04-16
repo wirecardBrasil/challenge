@@ -1,4 +1,4 @@
-# Moip mobile challenge
+# Wirecard mobile challenge
 
 Develop an app that consumes Moip API. The app should login and retrieve the authentication and list all orders from the account logged; clicking in one of the orders should open its details. You may follow the given mockups as guidelines for your challenge.
 
